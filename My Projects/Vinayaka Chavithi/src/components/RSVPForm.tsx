@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { siteConfig } from '../data/siteConfig'
 
 export default function RSVPForm(){
@@ -6,6 +6,7 @@ export default function RSVPForm(){
   const [loading,setLoading]=useState(false)
   const [success,setSuccess]=useState<null|boolean>(null)
   const [form,setForm]=useState({name:'',apartment:'',phone:'',email:'',count:1,interest:'General Participation',message:''})
+  const nameRef = useRef<HTMLInputElement | null>(null)
 
   const submit=(e:React.FormEvent)=>{
     e.preventDefault()
@@ -35,6 +36,21 @@ export default function RSVPForm(){
     }
   }
 
+  // Listen for external open requests (e.g., Volunteer button)
+  useEffect(()=>{
+    const openHandler = ()=>{
+      setOpen(true)
+      // focus after open animation
+      setTimeout(()=>{ try{ nameRef.current && nameRef.current.focus() }catch{} }, 350)
+    }
+    window.addEventListener('rsvp-open', openHandler as EventListener)
+    // if URL hash directly targets rsvp, open on mount
+    if(typeof window !== 'undefined' && window.location.hash === '#rsvp'){
+      openHandler()
+    }
+    return ()=> window.removeEventListener('rsvp-open', openHandler as EventListener)
+  }, [])
+
   return (
     <section id="rsvp" className="mt-8">
       <div className="mt-4">
@@ -57,7 +73,7 @@ export default function RSVPForm(){
         <div id="rsvp-panel" className={`mt-3 overflow-hidden transition-all duration-300 ${open? 'max-h-[2000px] opacity-100':'max-h-0 opacity-0'}`} style={{transitionProperty:'max-height, opacity'}}>
           <div className="bg-white p-4 rounded-md shadow-inner border">
             <form onSubmit={submit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input aria-label="Name" placeholder="Name*" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} className="p-2 border rounded" />
+              <input ref={nameRef} aria-label="Name" placeholder="Name*" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} className="p-2 border rounded" />
               <input aria-label="Apartment" placeholder="Apartment / House No" value={form.apartment} onChange={e=>setForm({...form,apartment:e.target.value})} className="p-2 border rounded" />
               <input aria-label="Phone" placeholder="Phone*" value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})} className="p-2 border rounded" />
               <input aria-label="Email" placeholder="Email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} className="p-2 border rounded" />

@@ -50,9 +50,9 @@ export default function Schedule(){
             <div className="flex-1 bg-white rounded shadow p-4" style={{borderLeft:'6px solid #E0A800'}}>
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="flex items-baseline gap-3">
+                  <div className="flex flex-col md:flex-row items-baseline gap-2 md:gap-3">
                     <div className="font-semibold text-saffron">{e.title}</div>
-                    <div className="text-sm text-slate-600">{e.date}</div>
+                    <div className="text-xs md:text-sm text-slate-600">{e.date}</div>
                   </div>
                 </div>
                 <div className="text-sm text-slate-600">{e.time}</div>
