@@ -61,7 +61,9 @@ export const eventDetails = {
 
 // API base for server endpoints (RSVP). Update if you run the server on a different port or host.
 export const apiConfig = {
-  apiBase: 'http://localhost:4000'
+  // Allow overriding at build time with Vite env var VITE_API_BASE.
+  // In production we default to `/api` so the site can call a Vercel Serverless function.
+  apiBase: (import.meta.env && import.meta.env.VITE_API_BASE) || '/api'
 }
 
 // For quick real-photo placeholders we provide Unsplash Source queries below.
