@@ -47,13 +47,11 @@ body::before{
 html{scroll-behavior:smooth}
 
 /* Hero background and animation utilities */
-/* Use a smaller, compressed hero image to avoid bundling huge PNGs */
-.hero-bg{background-repeat:no-repeat;background-size:cover;background-position:center;background-attachment:fixed; background-image: url('/src/assets/culturalevent.webp')}
+.hero-bg{background-repeat:no-repeat;background-size:cover;background-position:center;background-attachment:fixed; background-image: url('/src/assets/bgimage.png')}
 
 /* Mobile-specific hero adjustments: use mobile image and center text/buttons */
 @media (max-width: 768px){
-  /* mobile: use the same small webp (it scales down nicely) */
-  .hero-bg{background-image: url('/src/assets/culturalevent.webp'); background-position: right center; background-size: cover; min-height: 100vh; background-attachment:scroll}
+  .hero-bg{background-image: url('/src/assets/bgimagemobile.png'); background-position: right center; background-size: cover; min-height: 100vh; background-attachment:scroll}
 
   /* Title at top, meta at bottom-left on mobile */
   .hero-bg .hero-content{ position:relative; min-height:100vh }
