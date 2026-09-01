@@ -112,6 +112,9 @@ export default function DevotionalAudio(){
         prog.loop = true
         prog.muted = true
         prog.volume = MUSIC_VOLUME
+        // improve mobile autoplay reliability
+        try{ (prog as any).playsInline = true }catch{}
+        try{ (prog as any).crossOrigin = 'anonymous' }catch{}
         console.debug('DevotionalAudio: attempting programmatic muted play', prog.src)
         await waitForCanPlay(prog, 4000)
         const playP = prog.play()
@@ -169,6 +172,8 @@ export default function DevotionalAudio(){
           prog.loop = true
           prog.volume = MUSIC_VOLUME
           prog.muted = false
+          try{ (prog as any).playsInline = true }catch{}
+          try{ (prog as any).crossOrigin = 'anonymous' }catch{}
           musicRef.current = prog as unknown as HTMLAudioElement
           m = prog as unknown as HTMLAudioElement
           try{ await waitForCanPlay(prog, 3000) }catch{}
