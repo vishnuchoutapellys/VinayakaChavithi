@@ -266,7 +266,7 @@ export default function DevotionalAudio(){
 
   return (
     <>
-      {/* <div className="fixed z-50 right-4 bottom-6">
+      <div className="fixed z-40 right-4 bottom-6 md:right-6 md:bottom-6">
         <button
           aria-pressed={playing}
           aria-label={playing ? 'Pause devotional music' : 'Play devotional music'}
@@ -276,7 +276,7 @@ export default function DevotionalAudio(){
         >
           <span className="text-xl">{playing ? '⏸️' : '▶️'}</span>
         </button>
-      </div> */}
+      </div>
 
       {/* music is handled via a single programmatic Audio instance (no DOM <audio> element) */}
       <audio ref={bellRef} src={siteConfig.audio?.bell || '/assets/audio/temple-bell.mp3'} preload="none" style={{display:'none'}} />
