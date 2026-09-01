@@ -10,7 +10,7 @@ export default function Footer(){
         <div className="text-white rounded-lg overflow-hidden" style={{background:'linear-gradient(90deg,var(--maroon),var(--saffron))', margin: '0 -1.5rem'}}>
           <div className="py-3 px-6">
             <div className="flex items-center justify-between gap-4">
-              <div className="text-sm text-center md:text-left">© {new Date().getFullYear()} {siteConfig.associationName}</div>
+              <div className="text-sm text-center md:text-left">© {new Date().getFullYear()} {siteConfig.associationName} — Developed By: <span className="font-semibold text-amber-200">Vishnu Choutapelly</span> • <a className="underline" href="tel:+919014249898">+91-9014249898</a></div>
 
               <div className="flex-shrink-0">
                 <div className="w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden bg-white/10 p-1 shadow-inner">
