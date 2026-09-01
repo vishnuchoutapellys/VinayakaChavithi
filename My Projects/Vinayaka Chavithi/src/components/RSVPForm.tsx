@@ -5,7 +5,6 @@ export default function RSVPForm(){
   const [open, setOpen] = useState(false)
   const [loading,setLoading]=useState(false)
   const [success,setSuccess]=useState<null|boolean>(null)
-  const [devotionalText,setDevotionalText]=useState<string>('')
   const [form,setForm]=useState({name:'',apartment:'',phone:'',email:'',count:1,interest:'General Participation',message:''})
   const nameRef = useRef<HTMLInputElement | null>(null)
 
@@ -22,12 +21,8 @@ export default function RSVPForm(){
       // Build WhatsApp message and open chat instead of sending to backend
       if(siteConfig.contact && siteConfig.contact.whatsapp){
         const digits = siteConfig.contact.whatsapp.replace(/[^0-9]/g,'')
-        const msg = `Hello, I am ${form.name}${form.apartment? ' (Apartment: '+form.apartment+')':''}. Phone: ${form.phone}. Email: ${form.email || '-'}; Participants: ${form.count}; Interested In: ${form.interest}; Message: ${form.message || '-'} -- I would like to RSVP for ${siteConfig.eventName} at ${siteConfig.placeName}.`;
-        const href = `https://wa.me/${digits}?text=${encodeURIComponent(msg)}`
-        window.open(href, '_blank')
-
-        // create devotional confirmation text including entered details
-        const devotional = `🕉️🌸వక్రతుండ మహాకాయ సూర్యకోటి సమప్రభ |నిర్విఘ్నం కురుమేదేవ సర్వకార्यేషు సర్వదా ||🕉️🙏🌸\n\n` +
+        // create devotional confirmation text including entered details and open it in WhatsApp
+        const devotional = `🕉️🌸వక్రతుండ మహాకాయ సూర్యకోటి సమപ്രభ |నిర్విఘ్నం కురుమేదేవ సర్వకార్యేషు సర్వదా ||🕉️🙏🌸\n\n` +
           `🙏🌺 GANESH CHATURTHI 2026 – PARTICIPATION CONFIRMATION 🌺🙏\n\n` +
           `🙏 Thank you ${form.name}${form.apartment? ' ('+form.apartment+')':''}!\n` +
           `📞 Phone: ${form.phone} | ✉️ Email: ${form.email || '-'}\n` +
@@ -37,9 +32,11 @@ export default function RSVPForm(){
           `🐘 Ganpati Bappa Morya!\n` +
           `🌺 Mangal Murti Morya! 🙏`
 
-        setDevotionalText(devotional)
-        setSuccess(true)
-        // keep form values in case user wants to edit; do not submit to backend
+        const href = `https://wa.me/${digits}?text=${encodeURIComponent(devotional)}`
+        window.open(href, '_blank')
+
+        // close the RSVP panel (do not display confirmation on-page)
+        setOpen(false)
       } else {
         // no whatsapp configured
         setSuccess(false)
@@ -100,9 +97,7 @@ export default function RSVPForm(){
               <textarea aria-label="Message" placeholder="Message" value={form.message} onChange={e=>setForm({...form,message:e.target.value})} className="p-2 md:col-span-2 border rounded" />
               <div className="md:col-span-2">
                 <button type="submit" className="px-4 py-2 bg-saffron text-white rounded" disabled={loading}>{loading? 'Sending...':'Submit'}</button>
-                {success===true && devotionalText && (
-                  <div className="mt-3 p-3 bg-cream rounded text-slate-800 whitespace-pre-line">{devotionalText}</div>
-                )}
+                {/* Confirmation is shown via WhatsApp chat; do not display on-page */}
                 {success===false && <div className="mt-2 text-red-600">Please complete required fields.</div>}
               </div>
             </form>
