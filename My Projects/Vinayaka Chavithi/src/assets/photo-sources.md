@@ -11,7 +11,7 @@ Gallery categories (search pages):
 - Pooja: https://unsplash.com/s/photos/pooja
 - Cultural Programs: https://unsplash.com/s/photos/indian-dance
 - Community: https://unsplash.com/s/photos/community
-- Nimajjanam / Procession: https://unsplash.com/s/photos/procession
+- Nimarjanam / Procession: https://unsplash.com/s/photos/procession
 
 Committee headshots:
 - Use local community photos with square crop. Placeholder: https://unsplash.com/s/photos/portrait

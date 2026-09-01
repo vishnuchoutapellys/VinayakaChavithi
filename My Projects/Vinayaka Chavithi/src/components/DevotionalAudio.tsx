@@ -275,7 +275,7 @@ export default function DevotionalAudio(){
 
   return (
     <>
-      <div className="fixed z-40 right-4 bottom-6 md:right-6 md:bottom-6">
+      <div className="fixed z-40 right-4 bottom-20 md:right-6 md:bottom-20">
         <button
           aria-pressed={playing}
           aria-label={playing ? 'Pause devotional music' : 'Play devotional music'}

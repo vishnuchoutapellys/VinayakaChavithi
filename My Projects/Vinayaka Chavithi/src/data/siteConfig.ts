@@ -2,7 +2,7 @@
 const paymentImg = new URL('../assets/payment.png', import.meta.url).href
 const logoImg = new URL('../assets/lgpGanesha.png', import.meta.url).href
 const tirupathiImg = new URL('../assets/tirupathi.png', import.meta.url).href
-const localMusic = new URL('../assets/music/song.mp3', import.meta.url).href
+const localMusic = new URL('../assets/music/song.mpeg', import.meta.url).href
 const ganesh1 = new URL('../assets/ganesh1.jpg', import.meta.url).href
 const ganesh2 = new URL('../assets/ganesh2.jpg', import.meta.url).href
 const ganesh3 = new URL('../assets/ganesh3.jpg', import.meta.url).href
@@ -13,9 +13,9 @@ const ganesh7 = new URL('../assets/ganesh7.jpg', import.meta.url).href
 const sthapanaImg = new URL('../assets/sthapana.jpg', import.meta.url).href
 
 export const siteConfig = {
-  associationName: 'LGP Association',
+  associationName: 'LGP Owners Cultural Committee',
   eventName: 'Lahari Green Park Ganesh Chaturthi Celebrations 2026',
-  placeName: 'Lahari Green Park',
+  placeName: 'Lahari Green Park, Bowrampet, Telangana',
   // Primary start (Sthapana) date/time for countdown
   eventDateISO: '2026-09-14T18:00:00',
   // Full celebration range
@@ -26,7 +26,7 @@ export const siteConfig = {
   sthapanaDate: '2026-09-14',
   venue: {
     name: 'Lahari Green Park',
-    address: 'Lahari Green Park, Near Main Gate, Bachupally, Hyderabad, Telangana, India',
+    address: 'Cultural Center, Association Office, LGP, Bowrampet, 500043, Telangana',
     mapsUrl: 'https://maps.app.goo.gl/baovJgUUfrgeZ2Wu6'
   },
   contact: {
@@ -35,7 +35,7 @@ export const siteConfig = {
     email: '[EMAIL_ADDRESS]'
   },
   donation: {
-    upiId: '[UPI_ID]',
+    upiId: 'chemistryiit2012-1@oksbi',
     qrImage: paymentImg,
     contact: '[DONATION_CONTACT]'
   }
@@ -63,7 +63,7 @@ export const eventDetails = {
     'Stage Carpet',
     'Akhanda Deepam Setup',
     'Pooja Items – Bells, Harathi Plates, Diyas, Pooja Samagri',
-    'DJ & Visarjan/Nimajjanam Arrangements',
+    'DJ & Visarjan/Nimarjanam Arrangements',
     'Daily Gaja Mala & Flowers',
     'Mandapam Decoration'
   ],

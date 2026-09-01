@@ -29,6 +29,9 @@ export default function Donation(){
               <div className="bg-white p-4 rounded shadow w-full md:w-56 text-center flex flex-col justify-center">
                 <div className="mt-3 text-sm text-slate-600">Scan QR to donate</div>
                 {siteConfig.donation.qrImage && <img src={siteConfig.donation.qrImage} alt="" aria-hidden className="mx-auto mt-2 w-36 md:w-40" loading="lazy"/>}
+                <div className="mt-3">
+                  <DonateButton />
+                </div>
               </div>
               <div className="flex-1 mt-4 md:mt-0">
                 <p className="text-slate-700 whitespace-pre-line">{eventDetails.intro}</p>
@@ -69,5 +72,53 @@ export default function Donation(){
         </div>
       </div>
     </section>
+  )
+}
+
+function DonateButton(){
+  const upiId = siteConfig.donation.upiId
+  const handleDonateClick = () => {
+    const pa = upiId
+    const pn = siteConfig.associationName
+    const tn = `Donation for ${siteConfig.eventName}`
+    const upiParams = `pa=${encodeURIComponent(pa || '')}&pn=${encodeURIComponent(pn)}&tn=${encodeURIComponent(tn)}&cu=INR`
+    const upiLink = `upi://pay?${upiParams}`
+
+    // Android Chrome supports intent:// which can specify PhonePe package
+    const isAndroid = /Android/i.test(navigator.userAgent)
+    const isChrome = /Chrome/i.test(navigator.userAgent)
+
+    if(pa && !pa.includes('[')){
+      if(isAndroid && isChrome){
+        const intentUrl = `intent://pay?${upiParams}#Intent;package=com.phonepe.app;scheme=upi;end`
+
+        // Attempt PhonePe intent first. If it fails, try generic UPI after timeout.
+        window.location.href = intentUrl
+
+        // Fallback to generic UPI link after short delay (if intent not handled)
+        setTimeout(()=>{
+          window.location.href = upiLink
+        }, 1200)
+      }else{
+        // Non-Android or non-Chrome: try generic UPI link which many apps register
+        try{
+          window.location.href = upiLink
+        }catch(e){
+          if(siteConfig.donation.qrImage) window.open(siteConfig.donation.qrImage, '_blank')
+        }
+      }
+    }else{
+      // No valid UPI id configured; open QR image for scanning
+      if(siteConfig.donation.qrImage) window.open(siteConfig.donation.qrImage, '_blank')
+    }
+  }
+
+  return (
+    <>
+      <button type="button" onClick={handleDonateClick} className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-maroon text-white font-semibold shadow">
+        Donate
+      </button>
+      <div className="text-xs text-slate-500 mt-2">Opens PhonePe/UPI app on mobile (fallback: opens QR image for scanning)</div>
+    </>
   )
 }

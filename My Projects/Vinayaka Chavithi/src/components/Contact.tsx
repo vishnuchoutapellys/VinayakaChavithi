@@ -29,9 +29,8 @@ export default function Contact(){
               <div className="text-sm text-slate-600">{siteConfig.venue.address}</div>
             </div>
             <div>
-              {siteConfig.contact?.phone && <div className="text-sm">Phone: <a href={`tel:${siteConfig.contact.phone.replace(/[^0-9+]/g,'')}`}>{siteConfig.contact.phone}</a></div>}
-              {siteConfig.contact?.whatsapp && <div className="text-sm">WhatsApp: <a href={`https://wa.me/${siteConfig.contact.whatsapp.replace(/[^0-9]/g,'')}`} target="_blank" rel="noreferrer">Message on WhatsApp</a></div>}
-              {siteConfig.contact?.email && <div className="text-sm">Email: <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a></div>}
+              {siteConfig.contact?.phone && <div className="text-sm"><span className="font-semibold">Phone:</span> <a href={`tel:${siteConfig.contact.phone.replace(/[^0-9+]/g,'')}`}>{siteConfig.contact.phone}</a></div>}
+              {siteConfig.contact?.whatsapp && <div className="text-sm"><span className="font-semibold">WhatsApp:</span> <a href={`https://wa.me/${siteConfig.contact.whatsapp.replace(/[^0-9]/g,'')}`} target="_blank" rel="noreferrer">Message on WhatsApp</a></div>}
             </div>
           </div>
         </div>

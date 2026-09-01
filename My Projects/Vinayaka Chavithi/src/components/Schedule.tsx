@@ -26,7 +26,7 @@ const events = [
   {date:'15/09/2026 - 19/09/2026',title:'Daily Pooja',time:'Morning & Evening',desc:'Daily rituals and aarti', image: poojaImg},
   {date:'18/09/2026',title:'Cultural Evening',time:'6:00 PM',desc:'Music and dance performances', image: culturalevent},
   {date:'20/09/2026',title:'Grand Annadanam',time:'Afternoon',desc:'Community annadanam and cultural programs', image: circleImg},
-  {date:'20/09/2026',title:'Ganesh Nimajjanam',time:'Afternoon',desc:'Immersion procession', image: nimarjan}
+  {date:'20/09/2026',title:'Ganesh Nimarjanam',time:'Afternoon',desc:'Immersion procession', image: nimarjan}
 ]
 
 export default function Schedule(){
