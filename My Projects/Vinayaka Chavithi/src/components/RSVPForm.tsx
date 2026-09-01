@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { apiConfig, siteConfig } from '../data/siteConfig'
+import { siteConfig } from '../data/siteConfig'
 
 export default function RSVPForm(){
   const [open, setOpen] = useState(false)
@@ -7,7 +7,7 @@ export default function RSVPForm(){
   const [success,setSuccess]=useState<null|boolean>(null)
   const [form,setForm]=useState({name:'',apartment:'',phone:'',email:'',count:1,interest:'General Participation',message:''})
 
-  const submit=async(e:React.FormEvent)=>{
+  const submit=(e:React.FormEvent)=>{
     e.preventDefault()
     // basic validation
     if(!form.name||!form.phone){
@@ -16,25 +16,17 @@ export default function RSVPForm(){
     }
     setLoading(true)
     try{
-      const res = await fetch(`${apiConfig.apiBase}/api/rsvp`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form)
-      })
-      if(res.ok){
+      // Build WhatsApp message and open chat instead of sending to backend
+      if(siteConfig.contact && siteConfig.contact.whatsapp){
+        const digits = siteConfig.contact.whatsapp.replace(/[^0-9]/g,'')
+        const msg = `Hello, I am ${form.name}${form.apartment? ' (Apartment: '+form.apartment+')':''}. Phone: ${form.phone}. Email: ${form.email || '-'}; Participants: ${form.count}; Interested In: ${form.interest}; Message: ${form.message || '-'} -- I would like to RSVP for ${siteConfig.eventName} at ${siteConfig.placeName}.`;
+        const href = `https://wa.me/${digits}?text=${encodeURIComponent(msg)}`
+        window.open(href, '_blank')
         setSuccess(true)
+        // keep form values in case user wants to edit; do not submit to backend
       } else {
+        // no whatsapp configured
         setSuccess(false)
-      }
-      try{
-        if(siteConfig.contact && siteConfig.contact.whatsapp){
-          const digits = siteConfig.contact.whatsapp.replace(/[^0-9]/g,'')
-          const msg = `Hello, I am ${form.name}${form.apartment? ' (Apartment: '+form.apartment+')':''}. Phone: ${form.phone}. Email: ${form.email || '-'}; Participants: ${form.count}; Interested In: ${form.interest}; Message: ${form.message || '-'} -- I would like to RSVP / contribute for ${siteConfig.eventName} at ${siteConfig.placeName}.`;
-          const href = `https://wa.me/${digits}?text=${encodeURIComponent(msg)}`
-          window.open(href, '_blank')
-        }
-      }catch(err){
-        // ignore whatsapp open errors
       }
     }catch(err){
       setSuccess(false)
