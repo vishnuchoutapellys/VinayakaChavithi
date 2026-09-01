@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "vercel-build": "vite build && rm -rf /vercel/output || true && mkdir -p /vercel/output && cp -r dist/* /vercel/output/",
     "preview": "vite preview"
   },
   "dependencies": {
