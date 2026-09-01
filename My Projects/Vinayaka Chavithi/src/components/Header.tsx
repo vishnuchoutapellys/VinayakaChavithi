@@ -69,14 +69,14 @@ export default function Header(){
       {/* mobile drawer */}
       {open && (
         <div className="fixed inset-0 md:hidden z-40">
-          <div className="absolute inset-0 bg-black/40" onClick={()=>setOpen(false)} />
-          <aside className="absolute right-0 top-0 w-72 h-full bg-white p-6 z-50" onClick={e=>e.stopPropagation()} aria-label="Mobile navigation">
+          <div className="absolute inset-0 bg-black/70" onClick={()=>setOpen(false)} />
+          <aside className="absolute right-0 top-0 w-72 h-full bg-white p-6 z-50 shadow-lg" onClick={e=>e.stopPropagation()} aria-label="Mobile navigation">
             <button
-              className="absolute right-4 top-4 p-2 rounded-full bg-white shadow-md border border-slate-200 text-slate-800"
+              className="absolute right-4 top-4 p-2 rounded-full bg-white shadow-md border border-slate-200 text-slate-900 z-50"
               onClick={(e)=>{ e.stopPropagation(); setOpen(false) }}
               aria-label="Close menu"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#0f172a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="block">
+              <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="block">
                 <path d="M18 6L6 18" />
                 <path d="M6 6l12 12" />
               </svg>
