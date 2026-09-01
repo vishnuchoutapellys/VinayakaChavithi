@@ -1,0 +1,112 @@
+export const siteConfig = {
+  associationName: 'LGP Association',
+  eventName: 'Lahari Green Park Ganesh Chaturthi Celebrations 2026',
+  placeName: 'Lahari Green Park',
+  // Primary start (Sthapana) date/time for countdown
+  eventDateISO: '2026-09-14T18:00:00',
+  // Full celebration range
+  eventRange: {
+    start: '2026-09-14',
+    end: '2026-09-20'
+  },
+  sthapanaDate: '2026-09-14',
+  venue: {
+    name: 'Lahari Green Park',
+    address: 'Lahari Green Park, Near Main Gate, Bachupally, Hyderabad, Telangana, India',
+    mapsUrl: 'https://maps.app.goo.gl/baovJgUUfrgeZ2Wu6'
+  },
+  contact: {
+    phone: '+91 84999 84555',
+    whatsapp: '+918499984555',
+    email: '[EMAIL_ADDRESS]'
+  },
+  donation: {
+    upiId: '[UPI_ID]',
+    qrImage: '/src/assets/payment.png',
+    contact: '[DONATION_CONTACT]'
+  }
+
+  ,
+  // Devotional audio files (public folder paths). Replace with your own files.
+  audio: {
+    // default chant file for Ganesh festival
+    music: '/assets/audio/om-gum-ganapataye-namaha.mp3',
+    bell: '/assets/audio/temple-bell.mp3'
+  }
+}
+
+// Detailed event copy and donation requirements (actual details provided)
+export const eventDetails = {
+  intro: `🙏🌺 GANESH CHATURTHI 2026 – DONOR & SPONSORSHIP INVITATION 🌺🙏\n\nWith the blessings of Lord Ganesha, our Lahari Green Park community is celebrating 7 Days of Ganesh Chaturthi from September 14th to September 20th, 2026.\nSthapana: 14/09/2026\n\nThe celebrations will include daily Pooja & Aarti, cultural programs, devotional activities, community events, and Grand Annadanam on September 20th afternoon.`,
+  annadanamDate: '2026-09-20',
+  donationMethodsNote: 'DONATIONS CAN BE IN CASH, UPI OR IN KIND.',
+  donationRequirements: [
+    'Ganesh Idol & Pattu Vastram',
+    'Chairs – 150 Nos. (minimum 25 chairs can be sponsored)',
+    'Sound System with Mic',
+    'Focus Lights – 10 Nos.',
+    'Laddu – 10 Kg',
+    'Stage Carpet',
+    'Akhanda Deepam Setup',
+    'Pooja Items – Bells, Harathi Plates, Diyas, Pooja Samagri',
+    'DJ & Visarjan/Nimajjanam Arrangements',
+    'Daily Gaja Mala & Flowers',
+    'Mandapam Decoration'
+  ],
+  annadanamContributions: [
+    'Rice', 'Kirana/Grocery Items', 'Vegetables', 'Other food-related requirements'
+  ],
+  donorConfirmationDeadline: '2026-08-26T17:00:00'
+}
+
+// API base for server endpoints (RSVP). Update if you run the server on a different port or host.
+export const apiConfig = {
+  apiBase: 'http://localhost:4000'
+}
+
+// For quick real-photo placeholders we provide Unsplash Source queries below.
+// These URLs return royalty-free photos matching the query and are suitable
+// as temporary real-photo references. Replace with local optimized files
+// in `src/assets/` for production.
+export const photoChoices = {
+  hero: 'https://source.unsplash.com/1000x800/?ganesha,temple,festival',
+  heroAlt: 'Ganesha idol at festival',
+  committeePortrait: (i = 1) => `https://source.unsplash.com/400x400/?portrait,person,face&sig=${i}`,
+  galleryQueries: [
+    'https://source.unsplash.com/800x600/?pooja,prayers',
+    'https://source.unsplash.com/800x600/?festival,crowd',
+    'https://source.unsplash.com/800x600/?traditional,dance',
+    'https://source.unsplash.com/800x600/?music,performance',
+    'https://source.unsplash.com/800x600/?community,event',
+    'https://source.unsplash.com/800x600/?offering,annadanam',
+    'https://source.unsplash.com/800x600/?procession,immersion',
+    'https://source.unsplash.com/800x600/?kids,performance'
+  ]
+}
+
+// Committee, gallery and asset references are centralized here so maintainers can
+// replace placeholder images with real photos (local paths) or external URLs.
+export const siteAssets = {
+  logo: '/src/assets/logo.svg',
+  heroImage: photoChoices.hero,
+  committeeMembers: [
+    { name: 'Murali Garu', role: 'EC Member, LGP Owners Welfare Association', phone: '+919949292259', img: photoChoices.committeePortrait(1) },
+    { name: 'Thirupathi YSR', role: '', phone: '+918499984555', img: photoChoices.committeePortrait(2) },
+    { name: 'Jaswanth Reddy', role: '', phone: '+919866099677', img: photoChoices.committeePortrait(3) },
+    { name: 'Prasanth', role: 'EC Member, LGP Owners Welfare Association', phone: '+919000311123', img: photoChoices.committeePortrait(4) },
+    { name: 'Srinivas Reddy Katam', role: 'EC Member, LGP Owners Welfare Association', phone: '+919245884217', img: photoChoices.committeePortrait(5) },
+    { name: 'Aravind Kandiboyina', role: '', phone: '+916281116559', img: photoChoices.committeePortrait(6) }
+  ],
+  // Gallery files: prefer local images in `src/assets/` named ganesha1.jpg..ganesha8.jpg
+  // If those files are not present, fall back to Unsplash queries defined above.
+  galleryPlaceholders: [
+    { src: '/src/assets/ganesh1.jpg', alt: 'Gallery 1' },
+    { src: '/src/assets/ganesh2.jpg', alt: 'Gallery 2' },
+    { src: '/src/assets/ganesh3.jpg', alt: 'Gallery 3' },
+    { src: '/src/assets/ganesh4.jpg', alt: 'Gallery 4' },
+    { src: '/src/assets/ganesh5.jpg', alt: 'Gallery 5' },
+    { src: '/src/assets/ganesh6.jpg', alt: 'Gallery 6' },
+    { src: '/src/assets/ganesh7.jpg', alt: 'Gallery 7' },
+    { src: '/src/assets/sthapana.jpg', alt: 'Gallery 8' }
+  ]
+}
