@@ -41,7 +41,7 @@ export default function Header(){
       <div className="max-w-6xl mx-auto flex items-center justify-between p-4">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center">
-            <img src={'/src/assets/lgpGanesha.png'} alt={`${siteConfig.associationName} logo`} className="w-full h-full object-cover"/>
+            <img src={siteAssets.logo} alt={`${siteConfig.associationName} logo`} className="w-full h-full object-cover"/>
           </div>
           <div>
             <div className={`font-display text-lg ${scrolled ? 'text-slate-800' : 'text-white'}`}>{siteConfig.associationName}</div>

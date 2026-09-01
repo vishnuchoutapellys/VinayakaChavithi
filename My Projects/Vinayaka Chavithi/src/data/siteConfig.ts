@@ -1,3 +1,15 @@
+// Resolve local asset URLs so Vite rewrites them correctly during build
+const paymentImg = new URL('../assets/payment.png', import.meta.url).href
+const logoImg = new URL('../assets/lgpGanesha.png', import.meta.url).href
+const ganesh1 = new URL('../assets/ganesh1.jpg', import.meta.url).href
+const ganesh2 = new URL('../assets/ganesh2.jpg', import.meta.url).href
+const ganesh3 = new URL('../assets/ganesh3.jpg', import.meta.url).href
+const ganesh4 = new URL('../assets/ganesh4.jpg', import.meta.url).href
+const ganesh5 = new URL('../assets/ganesh5.jpg', import.meta.url).href
+const ganesh6 = new URL('../assets/ganesh6.jpg', import.meta.url).href
+const ganesh7 = new URL('../assets/ganesh7.jpg', import.meta.url).href
+const sthapanaImg = new URL('../assets/sthapana.jpg', import.meta.url).href
+
 export const siteConfig = {
   associationName: 'LGP Association',
   eventName: 'Lahari Green Park Ganesh Chaturthi Celebrations 2026',
@@ -22,7 +34,7 @@ export const siteConfig = {
   },
   donation: {
     upiId: '[UPI_ID]',
-    qrImage: '/src/assets/payment.png',
+    qrImage: paymentImg,
     contact: '[DONATION_CONTACT]'
   }
 
@@ -89,7 +101,7 @@ export const photoChoices = {
 // Committee, gallery and asset references are centralized here so maintainers can
 // replace placeholder images with real photos (local paths) or external URLs.
 export const siteAssets = {
-  logo: '/src/assets/logo.svg',
+  logo: logoImg,
   heroImage: photoChoices.hero,
   committeeMembers: [
     { name: 'Murali Garu', role: 'EC Member, LGP Owners Welfare Association', phone: '+919949292259', img: photoChoices.committeePortrait(1) },
@@ -102,13 +114,13 @@ export const siteAssets = {
   // Gallery files: prefer local images in `src/assets/` named ganesha1.jpg..ganesha8.jpg
   // If those files are not present, fall back to Unsplash queries defined above.
   galleryPlaceholders: [
-    { src: '/src/assets/ganesh1.jpg', alt: 'Gallery 1' },
-    { src: '/src/assets/ganesh2.jpg', alt: 'Gallery 2' },
-    { src: '/src/assets/ganesh3.jpg', alt: 'Gallery 3' },
-    { src: '/src/assets/ganesh4.jpg', alt: 'Gallery 4' },
-    { src: '/src/assets/ganesh5.jpg', alt: 'Gallery 5' },
-    { src: '/src/assets/ganesh6.jpg', alt: 'Gallery 6' },
-    { src: '/src/assets/ganesh7.jpg', alt: 'Gallery 7' },
-    { src: '/src/assets/sthapana.jpg', alt: 'Gallery 8' }
+    { src: ganesh1, alt: 'Gallery 1' },
+    { src: ganesh2, alt: 'Gallery 2' },
+    { src: ganesh3, alt: 'Gallery 3' },
+    { src: ganesh4, alt: 'Gallery 4' },
+    { src: ganesh5, alt: 'Gallery 5' },
+    { src: ganesh6, alt: 'Gallery 6' },
+    { src: ganesh7, alt: 'Gallery 7' },
+    { src: sthapanaImg, alt: 'Gallery 8' }
   ]
 }
