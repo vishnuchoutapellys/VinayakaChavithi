@@ -193,6 +193,12 @@ export default function DevotionalAudio(){
 
     window.addEventListener('pointerdown', handleFirstUserGesture, { once: true })
     window.addEventListener('keydown', handleFirstUserGesture, { once: true })
+    // also attempt to play on first scroll (some mobile browsers treat scroll as a user gesture)
+    const onFirstScroll = ()=>{
+      try{ if(!playingRef.current) handlePlayToggle() }catch(e){ console.debug('scroll-play failed', e) }
+      window.removeEventListener('scroll', onFirstScroll)
+    }
+    window.addEventListener('scroll', onFirstScroll, { passive: true })
 
     const handleVisibility = ()=>{
       attachProps()

@@ -56,7 +56,7 @@ export default function Header(){
         </nav>
 
         <button
-          className={`md:hidden p-3 rounded-md shadow-md border relative z-50 ${scrolled ? 'bg-white text-slate-800 border-slate-200 backdrop-blur-sm' : 'bg-white/20 text-white border-white/20 backdrop-blur-sm'}`}
+          className={`md:hidden p-3 rounded-md shadow-md border relative z-50 ${scrolled ? 'bg-white text-slate-800 border-slate-200 backdrop-blur-sm' : 'bg-white/20 text-white border-white/20 backdrop-blur-sm'} ${open ? 'invisible' : ''}`}
           aria-label="Open menu"
           onClick={()=>setOpen(true)}
         >
@@ -83,7 +83,7 @@ export default function Header(){
             </button>
 
             <ul className="flex flex-col gap-4 mt-8">
-              {nav.map(n=> (
+              {nav.filter(n=> n !== 'About').map(n=> (
                 <li key={n}>
                   <button onClick={()=>handleNav(n)} className="w-full text-left text-lg py-2">{n}</button>
                 </li>
