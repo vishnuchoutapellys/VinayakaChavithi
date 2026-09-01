@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { siteConfig } from '../data/siteConfig'
 
-// Prefer a local song placed at `src/assets/music/song.mp3` when present.
-let localSongUrl = ''
-try{
-  localSongUrl = new URL('../assets/music/song.mp3', import.meta.url).href
-}catch{}
+// Do NOT statically bundle the large local MP3 by default.
+// Use `siteConfig.audio.music` (an external URL) to enable audio on deployments,
+// or set `VITE_INCLUDE_AUDIO=true` and provide a hosted URL via `siteConfig` for controlled builds.
 
 const STORAGE_KEY = 'devotional_music_muted'
 // Volume settings (0.0 - 1.0). Increase these for louder playback.
@@ -98,12 +96,15 @@ export default function DevotionalAudio(){
       setTimeout(()=>{ cleanup(); resolve() }, timeout)
     })
 
-    const resolvedSrc = localSongUrl || siteConfig.audio?.music || '/assets/audio/om-gum-ganapataye-namaha.mp3'
+    const resolvedSrc = siteConfig.audio?.music || ''
 
     // Try muted autoplay: try programmatic Audio first (often more reliable), then DOM audio
     const tryMutedAutoplay = async ()=>{
       attachProps()
       console.debug('DevotionalAudio: resolvedSrc=', resolvedSrc)
+
+      // If there's no configured audio source, skip autoplay attempts entirely
+      if(!resolvedSrc) return
 
       // 1) Programmatic Audio attempt
       try{
@@ -163,6 +164,7 @@ export default function DevotionalAudio(){
         attachProps()
         let m = musicRef.current
         if(!m){
+          if(!resolvedSrc) return
           const prog = new Audio(resolvedSrc)
           prog.loop = true
           prog.volume = MUSIC_VOLUME
