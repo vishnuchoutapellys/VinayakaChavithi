@@ -44,10 +44,7 @@ export default function RSVPForm(){
       setTimeout(()=>{ try{ nameRef.current && nameRef.current.focus() }catch{} }, 350)
     }
     window.addEventListener('rsvp-open', openHandler as EventListener)
-    // if URL hash directly targets rsvp, open on mount
-    if(typeof window !== 'undefined' && window.location.hash === '#rsvp'){
-      openHandler()
-    }
+    // do NOT auto-open on page load even if hash is present — open only on explicit user action
     return ()=> window.removeEventListener('rsvp-open', openHandler as EventListener)
   }, [])
 
