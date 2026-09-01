@@ -10,8 +10,8 @@ let nimajjanamImg = ''
 try{ sthapanaImg = new URL('../assets/sthapana.jpg', import.meta.url).href }catch{}
 try{ poojaImg = new URL('../assets/pooja.jpeg', import.meta.url).href }catch{}
 try{ culturalImg = new URL('../assets/culturalevent.webp', import.meta.url).href }catch{}
-try{ communityImg = new URL('../assets/community.jpg', import.meta.url).href }catch{}
-try{ annadanamImg = new URL('../assets/annadanam.jpg', import.meta.url).href }catch{}
+try{ communityImg = new URL('../assets/pooja.jpg', import.meta.url).href }catch{}
+try{ annadanamImg = new URL('../assets/pooja.jpg', import.meta.url).href }catch{}
 try{ nimajjanamImg = new URL('../assets/nimarjan.jpg', import.meta.url).href }catch{}
 
 const items = [
