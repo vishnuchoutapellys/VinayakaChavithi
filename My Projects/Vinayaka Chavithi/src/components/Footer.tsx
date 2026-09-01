@@ -1,6 +1,8 @@
 import React from 'react'
 import { siteConfig } from '../data/siteConfig'
 
+const tirupathiImg = new URL('../assets/tirupathi.png', import.meta.url).href
+
 export default function Footer(){
   return (
     <footer className="mt-12 py-10 rounded-lg overflow-hidden">
@@ -19,18 +21,19 @@ export default function Footer(){
           </div>
         </div>
 
-        {/* Desktop / larger screens: original gradient footer */}
+        {/* Desktop / larger screens: gradient footer with image on the right */}
         <div className="hidden md:block text-white rounded-lg overflow-hidden" style={{background:'linear-gradient(90deg,var(--maroon),var(--saffron))'}}>
           <div className="py-10 px-6">
-            <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6">
-              <div>
-                <div className="font-semibold">{siteConfig.associationName}</div>
-                <div className="text-sm">Made with devotion & community spirit</div>
+            <div className="flex items-center justify-between gap-6">
+              <div className="flex-1">
+                <div className="font-semibold text-lg">{siteConfig.associationName}</div>
+                <div className="text-sm mt-1">Made with devotion & community spirit</div>
+                <div className="mt-4 text-sm">© {new Date().getFullYear()} {siteConfig.associationName}</div>
+                <div className="mt-3">Developed By: <span className="font-semibold text-amber-200">Vishnu Choutapelly</span></div>
+                <div className="mt-1">For Orders: <a className="underline text-amber-100" href="tel:+919014249898">+91-9014249898</a></div>
               </div>
-              <div className="text-sm text-center md:text-right">
-                <div>© {new Date().getFullYear()} {siteConfig.associationName}</div>
-                <div className="mt-1">Developed By: <span className="font-semibold">Vishnu Choutapelly</span></div>
-                <div>For Orders: <a className="underline" href="tel:+919014249898">+91-9014249898</a></div>
+              <div className="w-40 h-40 flex-shrink-0 rounded overflow-hidden bg-white/10 p-2 shadow-inner">
+                <img src={tirupathiImg} alt="Tirupathi" className="w-full h-full object-contain" />
               </div>
             </div>
           </div>
