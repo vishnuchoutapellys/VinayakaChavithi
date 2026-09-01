@@ -1,6 +1,8 @@
 // Resolve local asset URLs so Vite rewrites them correctly during build
 const paymentImg = new URL('../assets/payment.png', import.meta.url).href
 const logoImg = new URL('../assets/lgpGanesha.png', import.meta.url).href
+const tirupathiImg = new URL('../assets/tirupathi.png', import.meta.url).href
+const localMusic = new URL('../assets/music/song.mp3', import.meta.url).href
 const ganesh1 = new URL('../assets/ganesh1.jpg', import.meta.url).href
 const ganesh2 = new URL('../assets/ganesh2.jpg', import.meta.url).href
 const ganesh3 = new URL('../assets/ganesh3.jpg', import.meta.url).href
@@ -39,10 +41,10 @@ export const siteConfig = {
   }
 
   ,
-  // Devotional audio files (public folder paths). Replace with your own files.
+  // Devotional audio files (resolved so Vite includes them)
   audio: {
-    // default chant file for Ganesh festival
-    music: '/assets/audio/om-gum-ganapataye-namaha.mp3',
+    // default chant file for Ganesh festival (bundled and played programmatically)
+    music: localMusic,
     bell: '/assets/audio/temple-bell.mp3'
   }
 }
@@ -104,12 +106,12 @@ export const siteAssets = {
   logo: logoImg,
   heroImage: photoChoices.hero,
   committeeMembers: [
-    { name: 'Murali Garu', role: 'EC Member, LGP Owners Welfare Association', phone: '+919949292259', img: photoChoices.committeePortrait(1) },
-    { name: 'Thirupathi YSR', role: '', phone: '+918499984555', img: photoChoices.committeePortrait(2) },
-    { name: 'Jaswanth Reddy', role: '', phone: '+919866099677', img: photoChoices.committeePortrait(3) },
-    { name: 'Prasanth', role: 'EC Member, LGP Owners Welfare Association', phone: '+919000311123', img: photoChoices.committeePortrait(4) },
-    { name: 'Srinivas Reddy Katam', role: 'EC Member, LGP Owners Welfare Association', phone: '+919245884217', img: photoChoices.committeePortrait(5) },
-    { name: 'Aravind Kandiboyina', role: '', phone: '+916281116559', img: photoChoices.committeePortrait(6) }
+    { name: 'Murali Garu', role: 'EC Member, LGP Owners Welfare Association', phone: '+919949292259', img: tirupathiImg },
+    { name: 'Thirupathi YSR', role: '', phone: '+918499984555', img: tirupathiImg },
+    { name: 'Jaswanth Reddy', role: '', phone: '+919866099677', img: tirupathiImg },
+    { name: 'Prasanth', role: 'EC Member, LGP Owners Welfare Association', phone: '+919000311123', img: tirupathiImg },
+    { name: 'Srinivas Reddy Katam', role: 'EC Member, LGP Owners Welfare Association', phone: '+919245884217', img: tirupathiImg },
+    { name: 'Aravind Kandiboyina', role: '', phone: '+916281116559', img: tirupathiImg }
   ],
   // Gallery files: prefer local images in `src/assets/` named ganesha1.jpg..ganesha8.jpg
   // If those files are not present, fall back to Unsplash queries defined above.
