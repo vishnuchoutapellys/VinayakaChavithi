@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { siteConfig, siteAssets } from '../data/siteConfig'
 
 const nav = ['Home','About','Events','Schedule','Gallery','Committee','Venue','Contact']
@@ -67,12 +68,12 @@ export default function Header(){
       </div>
 
       {/* mobile drawer */}
-      {open && (
-        <div className="fixed inset-0 md:hidden z-40">
-          <div className="absolute inset-0 bg-black/70" onClick={()=>setOpen(false)} />
-          <aside className="absolute right-0 top-0 w-72 h-full bg-white p-6 z-50 shadow-lg" onClick={e=>e.stopPropagation()} aria-label="Mobile navigation">
+      {open && typeof document !== 'undefined' && createPortal(
+        <div className="fixed inset-0 md:hidden z-[9998]">
+          <div className="absolute inset-0 bg-black/80" onClick={()=>setOpen(false)} />
+          <aside className="absolute right-0 top-0 w-72 h-full bg-white p-6 z-[9999] shadow-lg" onClick={e=>e.stopPropagation()} aria-label="Mobile navigation">
             <button
-              className="absolute right-4 top-4 p-2 rounded-full bg-white shadow-md border border-slate-200 text-slate-900 z-50"
+              className="absolute right-4 top-4 p-2 rounded-full bg-white shadow-md border border-slate-200 text-slate-900 z-[10000]"
               onClick={(e)=>{ e.stopPropagation(); setOpen(false) }}
               aria-label="Close menu"
             >
@@ -91,7 +92,7 @@ export default function Header(){
             </ul>
           </aside>
         </div>
-      )}
+      , document.body)}
     </header>
   )
 }
