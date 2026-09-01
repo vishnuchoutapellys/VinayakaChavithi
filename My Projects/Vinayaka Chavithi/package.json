@@ -2,7 +2,7 @@
   "name": "vinayaka-chavithi",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
+ "scripts": {
   "dev": "vite",
   "build": "vite build",
   "preview": "vite preview"
