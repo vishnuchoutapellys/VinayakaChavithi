@@ -34,3 +34,5 @@ npm start
 Replace placeholder photos
  - See `src/assets/photo-sources.md` for suggested image search pages (Unsplash / Pexels).
  - Replace the placeholder files in `src/assets/` with real images (optimize them for web), or update paths in `src/data/siteConfig.ts`.
+
+Redeploy trigger: 2026-09-01T14:30:00Z
