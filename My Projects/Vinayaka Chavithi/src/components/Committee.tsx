@@ -1,25 +1,34 @@
 import React from 'react'
 import { siteAssets, siteConfig } from '../data/siteConfig'
 import srinivasGoud from '../assets/committee/srinivas-goud.jpeg'
+import nageshwar from '../assets/committee/nageshwar.png'
 import vishnuImg from '../assets/committee/vishnu.jpeg'
 import raviImg from '../assets/committee/ravi.jpeg'
 import srinivasImg from '../assets/committee/srinivas.jpeg'
 import jagadeeshImg from '../assets/committee/jagadeesh.png'
+import pradeepImg from '../assets/committee/pradeep.jpeg'
+import prasantImg from '../assets/committee/prasant.png'
+
+
 
 export default function Committee(){
   const members = siteAssets.committeeMembers
   // Advisory committee names (use same portrait style as committee members)
   const advisoryMembers = [
-    { name: 'Srinivas Goud', role: '', phone: '+919014249898', img: srinivasGoud },
-    { name: 'Nageshwar Rao', role: '', phone: '+919014249898', img: siteAssets.committeeMembers[0]?.img },
-    { name: 'Vishnu', role: '', phone: '+919014249898', img: vishnuImg },
-    { name: 'Ravi', role: '', phone: '+919014249898', img: raviImg },
-    { name: 'Srinivas', role: '', phone: '+919014249898', img: srinivasImg },
-    { name: 'Jagadeesh', role: '', phone: '+919014249898', img: jagadeeshImg }
+    { name: 'Srinivas Goud', role: '', phone: '+91 9036397648', img: srinivasGoud },
+    { name: 'Nageshwar Rao', role: '', phone: '+91 7842422288', img: nageshwar },
+    { name: 'Vishnu', role: '', phone: '+91 9014249898', img: vishnuImg },
+    { name: 'Ravi', role: '', phone: '+91 7382460633', img: raviImg },
+    { name: 'Srinivas', role: '', phone: '+91 9000099243', img: srinivasImg },
+    { name: 'Jagadeesh', role: '', phone: '+91 9247366539', img: jagadeeshImg },
+    { name: 'Pradeep', role: '', phone: '+91 9052949582', img: pradeepImg },
+    { name: 'Prashanth', role: '', phone: '+91 9494645460', img: prasantImg },
+    { name: 'RK Reddy', role: '', phone: '+91 9347392340', img: jagadeeshImg }
+
   ]
   return (
     <section id="committee" className="mt-8">
-      <h3 className="text-2xl font-semibold">Committee / Organizers</h3>
+      <h3 className="text-2xl font-semibold">Organizers Committee</h3>
       <div className="mt-4 grid grid-cols-2 md:grid-cols-5 gap-4">
         {members.map(m=> {
           const digitsOnly = (m.phone || '').replace(/\D/g,'')
