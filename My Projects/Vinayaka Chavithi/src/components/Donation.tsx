@@ -44,14 +44,13 @@ export default function Donation(){
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-slate-800">Annadanam (20/09/2026) contributions</h4>
+                    <h4 className="font-semibold text-slate-800">Annadanam (20/09/2026) contributions(Sponcered by: GOTHIC Pangea Community)</h4>
                     <ul className="mt-2 list-disc pl-5 text-slate-700">
                       {eventDetails.annadanamContributions.map((a,idx)=>(<li key={idx}>{a}</li>))}
                     </ul>
                   </div>
                 </div>
 
-                <div className="mt-4 text-sm text-slate-700">Donor confirmation deadline: <strong>{new Date(eventDetails.donorConfirmationDeadline).toLocaleString()}</strong></div>
                 <div className="mt-2 text-sm text-slate-600">Please confirm sponsorship with the organizing team before purchasing to avoid duplication.</div>
 
                 <div className="mt-4">

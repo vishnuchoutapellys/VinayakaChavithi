@@ -26,7 +26,7 @@ export const siteConfig = {
   sthapanaDate: '2026-09-14',
   venue: {
     name: 'Lahari Green Park',
-    address: 'Cultural Center, Association Office, LGP, Bowrampet, 500043, Telangana',
+    address: 'Vinayaka Mandapam, Association Office, LGP, Bowrampet, 500043, Telangana',
     mapsUrl: 'https://maps.app.goo.gl/baovJgUUfrgeZ2Wu6'
   },
   contact: {
