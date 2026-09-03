@@ -18,8 +18,8 @@ function useCountdown(targetISO:string){
 
 export default function Countdown(){
   const c=useCountdown(siteConfig.eventDateISO)
-  if(c.diff===0){
-    return <div className="my-8 text-center">Celebration Started!</div>
+  if (c.diff === 0) {
+    return null
   }
   return (
     <section id="details" className="my-8">
