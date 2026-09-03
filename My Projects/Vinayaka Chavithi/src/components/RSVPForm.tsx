@@ -93,6 +93,7 @@ export default function RSVPForm(){
                 <option>Sponsorship</option>
                 <option>Annadanam</option>
                 <option>Pooja</option>
+                <option>Any Other(Dance,Singing,etc.)</option>
               </select>
               <textarea aria-label="Message" placeholder="Message" value={form.message} onChange={e=>setForm({...form,message:e.target.value})} className="p-2 md:col-span-2 border rounded" />
               <div className="md:col-span-2">
