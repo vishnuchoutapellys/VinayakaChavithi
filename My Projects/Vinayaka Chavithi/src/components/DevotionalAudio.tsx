@@ -97,6 +97,7 @@ export default function DevotionalAudio(){
     })
 
     const resolvedSrc = siteConfig.audio?.music || ''
+    const GLOBAL_KEY = '__DEVOTIONAL_MUSIC_INSTANCE'
 
     // Try muted autoplay: try programmatic Audio first (often more reliable), then DOM audio
     const tryMutedAutoplay = async ()=>{
@@ -108,13 +109,21 @@ export default function DevotionalAudio(){
 
       // 1) Programmatic Audio attempt
       try{
-        const prog = new Audio(resolvedSrc)
-        prog.loop = true
-        prog.muted = true
-        prog.volume = MUSIC_VOLUME
-        // improve mobile autoplay reliability
-        try{ (prog as any).playsInline = true }catch{}
-        try{ (prog as any).crossOrigin = 'anonymous' }catch{}
+        // Reuse a global audio instance to avoid creating multiple overlapping players
+        let prog = (window as any)[GLOBAL_KEY] as HTMLAudioElement | undefined
+        if(!prog){
+          prog = new Audio(resolvedSrc)
+          prog.loop = true
+          prog.muted = true
+          prog.volume = MUSIC_VOLUME
+          // improve mobile autoplay reliability
+          try{ (prog as any).playsInline = true }catch{}
+          try{ (prog as any).crossOrigin = 'anonymous' }catch{}
+          ;(window as any)[GLOBAL_KEY] = prog
+        } else {
+          // if global exists but src differs, update it
+          try{ if(prog.src !== resolvedSrc) prog.src = resolvedSrc }catch{}
+        }
         console.debug('DevotionalAudio: attempting programmatic muted play', prog.src)
         await waitForCanPlay(prog, 4000)
         const playP = prog.play()
@@ -124,7 +133,7 @@ export default function DevotionalAudio(){
         console.debug('DevotionalAudio: programmatic muted play succeeded')
         if(!mutedRef.current){
           const onFirstGesture = async ()=>{
-            try{ prog.muted = false; setMuted(false); try{ localStorage.setItem(STORAGE_KEY,'false') }catch{} }catch(e){ console.debug('unmute gesture failed', e) }
+            try{ prog!.muted = false; setMuted(false); try{ localStorage.setItem(STORAGE_KEY,'false') }catch{} }catch(e){ console.debug('unmute gesture failed', e) }
           }
           window.addEventListener('pointerdown', onFirstGesture, { once: true })
           window.addEventListener('keydown', onFirstGesture, { once: true })
@@ -168,12 +177,19 @@ export default function DevotionalAudio(){
         let m = musicRef.current
         if(!m){
           if(!resolvedSrc) return
-          const prog = new Audio(resolvedSrc)
-          prog.loop = true
-          prog.volume = MUSIC_VOLUME
-          prog.muted = false
-          try{ (prog as any).playsInline = true }catch{}
-          try{ (prog as any).crossOrigin = 'anonymous' }catch{}
+          let prog = (window as any)[GLOBAL_KEY] as HTMLAudioElement | undefined
+          if(!prog){
+            prog = new Audio(resolvedSrc)
+            prog.loop = true
+            prog.volume = MUSIC_VOLUME
+            prog.muted = false
+            try{ (prog as any).playsInline = true }catch{}
+            try{ (prog as any).crossOrigin = 'anonymous' }catch{}
+            ;(window as any)[GLOBAL_KEY] = prog
+          } else {
+            try{ if(prog.src !== resolvedSrc) prog.src = resolvedSrc }catch{}
+            prog.muted = false
+          }
           musicRef.current = prog as unknown as HTMLAudioElement
           m = prog as unknown as HTMLAudioElement
           try{ await waitForCanPlay(prog, 3000) }catch{}
@@ -236,7 +252,20 @@ export default function DevotionalAudio(){
       if(uninstallDiag) uninstallDiag()
       if(bellTimerRef.current) window.clearTimeout(bellTimerRef.current)
       if(periodicTimerRef.current) window.clearTimeout(periodicTimerRef.current)
-      try{ if(musicRef.current){ musicRef.current.pause(); musicRef.current.src=''; } }catch{}
+      try{
+        if(musicRef.current){
+          try{
+            const GLOBAL_KEY = '__DEVOTIONAL_MUSIC_INSTANCE'
+            if((window as any)[GLOBAL_KEY] && (window as any)[GLOBAL_KEY] === musicRef.current){
+              // shared global instance: only pause so it can be reused
+              musicRef.current.pause()
+            } else {
+              // local instance: pause and release src
+              musicRef.current.pause(); musicRef.current.src = ''
+            }
+          }catch{ musicRef.current.pause() }
+        }
+      }catch{}
       try{ if(bellRef.current){ bellRef.current.pause(); bellRef.current.src=''; } }catch{}
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

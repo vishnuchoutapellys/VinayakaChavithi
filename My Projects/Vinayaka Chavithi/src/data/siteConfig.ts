@@ -2,7 +2,8 @@
 const paymentImg = new URL('../assets/payment.png', import.meta.url).href
 const logoImg = new URL('../assets/lgpGanesha.png', import.meta.url).href
 const tirupathiImg = new URL('../assets/tirupathi.png', import.meta.url).href
-const localMusic = new URL('../assets/music/song.mpeg', import.meta.url).href
+// Prefer .mp3 for wider mobile/iOS compatibility
+const localMusic = new URL('../assets/music/song.mp3', import.meta.url).href
 const ganesh1 = new URL('../assets/ganesh1.jpg', import.meta.url).href
 const ganesh2 = new URL('../assets/ganesh2.jpg', import.meta.url).href
 const ganesh3 = new URL('../assets/ganesh3.jpg', import.meta.url).href
@@ -11,6 +12,10 @@ const ganesh5 = new URL('../assets/ganesh5.jpg', import.meta.url).href
 const ganesh6 = new URL('../assets/ganesh6.jpg', import.meta.url).href
 const ganesh7 = new URL('../assets/ganesh7.jpg', import.meta.url).href
 const sthapanaImg = new URL('../assets/sthapana.jpg', import.meta.url).href
+
+import jaswanthImg from '../assets/committee/jaswanth.jpeg'
+import aravindImg from '../assets/committee/aravind.png'
+
 
 export const siteConfig = {
   associationName: 'LGP Owners Cultural Committee',
@@ -107,8 +112,8 @@ export const siteAssets = {
   heroImage: photoChoices.hero,
   committeeMembers: [
     { name: 'Thirupathi YSR', role: '', phone: '+918499984555', img: tirupathiImg },
-    { name: 'Jaswanth ', role: '', phone: '+919866099677', img: tirupathiImg },
-    { name: 'Aravind ', role: '', phone: '+916281116559', img: tirupathiImg },
+    { name: 'Jaswanth ', role: '', phone: '+919866099677', img: jaswanthImg },
+    { name: 'Aravind ', role: '', phone: '+916281116559', img: aravindImg },
     { name: 'Murali Garu', role: 'EC Member, LGP Owners Welfare Association', phone: '+919949292259', img: tirupathiImg },
     { name: 'Srinivas Reddy ', role: 'EC Member, LGP Owners Welfare Association', phone: '+919245884217', img: tirupathiImg },
     { name: 'Prasanth', role: 'EC Member, LGP Owners Welfare Association', phone: '+919000311123', img: tirupathiImg },

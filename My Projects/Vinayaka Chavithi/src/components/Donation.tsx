@@ -86,6 +86,7 @@ function DonateButton(){
     // Android Chrome supports intent:// which can specify PhonePe package
     const isAndroid = /Android/i.test(navigator.userAgent)
     const isChrome = /Chrome/i.test(navigator.userAgent)
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent) && !window.MSStream
 
     if(pa && !pa.includes('[')){
       if(isAndroid && isChrome){
@@ -98,10 +99,14 @@ function DonateButton(){
         setTimeout(()=>{
           window.location.href = upiLink
         }, 1200)
-      }else{
-        // Non-Android or non-Chrome: try generic UPI link which many apps register
+      } else {
+        // Non-Android: attempt generic UPI link and fallback to QR image after timeout
         try{
           window.location.href = upiLink
+          // If the UPI scheme isn't handled (common on iOS), open the QR image after a delay
+          setTimeout(()=>{
+            if(siteConfig.donation.qrImage) window.open(siteConfig.donation.qrImage, '_blank')
+          }, 1200)
         }catch(e){
           if(siteConfig.donation.qrImage) window.open(siteConfig.donation.qrImage, '_blank')
         }
