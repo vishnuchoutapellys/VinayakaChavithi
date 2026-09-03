@@ -106,12 +106,13 @@ export const siteAssets = {
   logo: logoImg,
   heroImage: photoChoices.hero,
   committeeMembers: [
-    { name: 'Murali Garu', role: 'EC Member, LGP Owners Welfare Association', phone: '+919949292259', img: tirupathiImg },
     { name: 'Thirupathi YSR', role: '', phone: '+918499984555', img: tirupathiImg },
-    { name: 'Jaswanth Reddy', role: '', phone: '+919866099677', img: tirupathiImg },
+    { name: 'Jaswanth ', role: '', phone: '+919866099677', img: tirupathiImg },
+    { name: 'Aravind ', role: '', phone: '+916281116559', img: tirupathiImg },
+    { name: 'Murali Garu', role: 'EC Member, LGP Owners Welfare Association', phone: '+919949292259', img: tirupathiImg },
+    { name: 'Srinivas Reddy ', role: 'EC Member, LGP Owners Welfare Association', phone: '+919245884217', img: tirupathiImg },
     { name: 'Prasanth', role: 'EC Member, LGP Owners Welfare Association', phone: '+919000311123', img: tirupathiImg },
-    { name: 'Srinivas Reddy Katam', role: 'EC Member, LGP Owners Welfare Association', phone: '+919245884217', img: tirupathiImg },
-    { name: 'Aravind Kandiboyina', role: '', phone: '+916281116559', img: tirupathiImg }
+
   ],
   // Gallery files: prefer local images in `src/assets/` named ganesha1.jpg..ganesha8.jpg
   // If those files are not present, fall back to Unsplash queries defined above.
