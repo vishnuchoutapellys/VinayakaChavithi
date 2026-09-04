@@ -113,13 +113,12 @@ export const siteAssets = {
   logo: logoImg,
   heroImage: photoChoices.hero,
   committeeMembers: [
-    { name: 'Thirupathi YSR', role: '', phone: '+918499984555', img: tirupathiImg },
-    { name: 'Jaswanth ', role: '', phone: '+919866099677', img: jaswanthImg },
-    { name: 'Aravind ', role: '', phone: '+916281116559', img: aravindImg },
     { name: 'Murali Garu', role: 'EC Member, LGP Owners Welfare Association', phone: '+919949292259', img: altImg },
     { name: 'Srinivas Reddy ', role: 'EC Member, LGP Owners Welfare Association', phone: '+919245884217', img: altImg },
     { name: 'Prasanth', role: 'EC Member, LGP Owners Welfare Association', phone: '+919000311123', img: altImg },
-
+    { name: 'Thirupathi YSR', role: '', phone: '+918499984555', img: tirupathiImg },
+    { name: 'Jaswanth ', role: '', phone: '+919866099677', img: jaswanthImg },
+    { name: 'Aravind ', role: '', phone: '+916281116559', img: aravindImg },
   ],
   // Gallery files: prefer local images in `src/assets/` named ganesha1.jpg..ganesha8.jpg
   // If those files are not present, fall back to Unsplash queries defined above.
