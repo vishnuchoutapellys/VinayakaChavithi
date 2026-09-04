@@ -5,44 +5,140 @@ export default function RSVPForm(){
   const [open, setOpen] = useState(false)
   const [loading,setLoading]=useState(false)
   const [success,setSuccess]=useState<null|boolean>(null)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [form,setForm]=useState({name:'',apartment:'',phone:'',email:'',count:1,interest:'General Participation',message:''})
   const nameRef = useRef<HTMLInputElement | null>(null)
+  const [showPwdModal, setShowPwdModal] = useState(false)
+  const [downloadPwd, setDownloadPwd] = useState('')
+  const [pwdError, setPwdError] = useState<string | null>(null)
+  const [downloading, setDownloading] = useState(false)
 
-  const submit=(e:React.FormEvent)=>{
+  // Resolve API base robustly for both submit and download handlers
+  const resolveApiBase = ()=>{
+    const configuredBase = siteConfig.apiConfig?.apiBase || '/api'
+    let apiBase = configuredBase
+    try{
+      if(typeof window !== 'undefined' && window.location){
+        const isLocalDevServer = window.location.hostname === 'localhost' && (window.location.port === '5173' || window.location.port === '5174')
+        if((configuredBase === '/api' || configuredBase === '') && isLocalDevServer){
+          apiBase = 'http://localhost:3001/api'
+        }
+      }
+    }catch(e){ }
+    return { configuredBase, apiBase }
+  }
+
+  // Local storage helpers (fallback for serverless/simple deployment)
+  const LS_KEY = 'participants_local'
+  const appendToLocal = (row:{dateTime:string,name:string,apartment:string,phone:string,email:string,count:number,interest:string,message:string})=>{
+    try{
+      const raw = localStorage.getItem(LS_KEY)
+      const arr = raw ? JSON.parse(raw) : []
+      arr.push(row)
+      localStorage.setItem(LS_KEY, JSON.stringify(arr))
+      return true
+    }catch(e){ console.error('local append failed', e); return false }
+  }
+  const readLocal = ()=>{
+    try{ const raw = localStorage.getItem(LS_KEY); return raw ? JSON.parse(raw) : [] }catch(e){ return [] }
+  }
+  const downloadLocalAsCSV = ()=>{
+    const rows = readLocal()
+    if(!rows || rows.length===0) return false
+    const headers = ['Date & Time','Name','Apartment / House No','Phone','Email','Number of Participants','Participation Type','Message']
+    const lines = [headers.join(',')]
+    for(const r of rows){
+      const esc = (v:any)=>`"${String(v||'').replace(/"/g,'""')}"`
+      lines.push([esc(r.dateTime),esc(r.name),esc(r.apartment),esc(r.phone),esc(r.email),esc(r.count),esc(r.interest),esc(r.message)].join(','))
+    }
+    const blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'participants_local.csv'
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+    URL.revokeObjectURL(url)
+    return true
+  }
+
+  const submit=async(e:React.FormEvent)=>{
     e.preventDefault()
-    // basic validation
-    if(!form.name||!form.phone){
+    // basic validation (frontend)
+    setErrorMessage(null)
+    const name = String(form.name || '').trim()
+    const phone = String(form.phone || '').trim()
+    const interest = String(form.interest || '').trim()
+    if(!name || !phone || !interest){
+      const missing = [] as string[]
+      if(!name) missing.push('Name')
+      if(!phone) missing.push('Phone')
+      if(!interest) missing.push('Participation Type')
+      setErrorMessage(`Please complete required fields: ${missing.join(', ')}`)
       setSuccess(false)
       return
     }
     setLoading(true)
-
     try{
-      // Build WhatsApp message and open chat instead of sending to backend
-      if(siteConfig.contact && siteConfig.contact.whatsapp){
-        const digits = siteConfig.contact.whatsapp.replace(/[^0-9]/g,'')
-        // create devotional confirmation text including entered details and open it in WhatsApp
-        const devotional = `🕉️🌸వక్రతుండ మహాకాయ సూర్యకోటి సమപ്രభ |నిర్విఘ్నం కురుమేదేవ సర్వకార్యేషు సర్వదా ||🕉️🙏🌸\n\n` +
-          `🙏🌺 GANESH CHATURTHI 2026 – PARTICIPATION CONFIRMATION 🌺🙏\n\n` +
-          `🙏 Thank you ${form.name}${form.apartment? ' ('+form.apartment+')':''}!\n` +
-          `📞 Phone: ${form.phone} | ✉️ Email: ${form.email || '-'}\n` +
-          `👥 Participants: ${form.count} | 🔖 Interest: ${form.interest}\n` +
-          `${form.message ? `💬 Message: ${form.message}\n` : ''}\n` +
-          `🙏 Your support can make a difference!\n` +
-          `🐘 Ganpati Bappa Morya!\n` +
-          `🌺 Mangal Murti Morya! 🙏`
+      const payload = {
+        name: String(form.name).trim(),
+        apartment: String(form.apartment || '').trim(),
+        phone: String(form.phone).trim(),
+        email: String(form.email || '').trim(),
+        count: Number(form.count) || 1,
+        interest: String(form.interest).trim(),
+        message: String(form.message || '').trim()
+      }
 
-        const href = `https://wa.me/${digits}?text=${encodeURIComponent(devotional)}`
-        window.open(href, '_blank')
-
-        // close the RSVP panel (do not display confirmation on-page)
+      const { configuredBase, apiBase } = resolveApiBase()
+      console.debug('RSVP submit payload', payload)
+      console.debug('RSVP configured apiBase=', configuredBase, '=> using', apiBase)
+      const resp = await fetch(`${apiBase}/participants`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      let data = {}
+      try{ data = await resp.json() }catch(e){ console.debug('no JSON response') }
+      if(resp.ok && (data as any).success){
+        setSuccess(true)
+        setErrorMessage(null)
+        // clear form only after confirmed saved
+        setForm({name:'',apartment:'',phone:'',email:'',count:1,interest:'General Participation',message:''})
         setOpen(false)
       } else {
-        // no whatsapp configured
-        setSuccess(false)
+        // Server returned error; try fallback to localStorage
+        const serverMsg = (data && (data as any).error) ? (data as any).error : `Server returned ${resp.status}`
+        console.debug('Server error, falling back to localStorage', serverMsg)
+        const now = (new Date()).toISOString()
+        const appended = appendToLocal({ dateTime: now, name: payload.name, apartment: payload.apartment, phone: payload.phone, email: payload.email, count: payload.count, interest: payload.interest, message: payload.message })
+        if(appended){
+          setSuccess(true)
+          setErrorMessage('Saved locally (offline fallback).')
+          setForm({name:'',apartment:'',phone:'',email:'',count:1,interest:'General Participation',message:''})
+          setOpen(false)
+        } else {
+          setErrorMessage(String(serverMsg))
+          setSuccess(false)
+        }
       }
     }catch(err){
-      setSuccess(false)
+      console.error('RSVP submit error', err)
+      // network error or server unreachable
+      // fallback to localStorage if network error
+      console.debug('Network error, saving locally')
+      const now = (new Date()).toISOString()
+      const appended = appendToLocal({ dateTime: now, name: payload.name, apartment: payload.apartment, phone: payload.phone, email: payload.email, count: payload.count, interest: payload.interest, message: payload.message })
+      if(appended){
+        setSuccess(true)
+        setErrorMessage('Saved locally (offline fallback).')
+        setForm({name:'',apartment:'',phone:'',email:'',count:1,interest:'General Participation',message:''})
+        setOpen(false)
+      } else {
+        setErrorMessage('Unable to reach the server and local save failed.')
+        setSuccess(false)
+      }
     }finally{
       setLoading(false)
     }
@@ -92,14 +188,82 @@ export default function RSVPForm(){
                 <option>Volunteer</option>
                 <option>Sponsorship</option>
                 <option>Annadanam</option>
-                <option>Pooja</option>
+                <option>Games</option>
+                 <option>Pooja</option>
                 <option>Any Other(Dance,Singing,etc.)</option>
               </select>
               <textarea aria-label="Message" placeholder="Message" value={form.message} onChange={e=>setForm({...form,message:e.target.value})} className="p-2 md:col-span-2 border rounded" />
               <div className="md:col-span-2">
-                <button type="submit" className="px-4 py-2 bg-saffron text-white rounded" disabled={loading}>{loading? 'Sending...':'Submit'}</button>
-                {/* Confirmation is shown via WhatsApp chat; do not display on-page */}
-                {success===false && <div className="mt-2 text-red-600">Please complete required fields.</div>}
+                <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
+                  <button type="submit" className="px-4 py-2 bg-saffron text-white rounded" disabled={loading}>{loading? 'Sending...':'Submit'}</button>
+                </div>
+                <div className="mt-3">
+                  <button type="button" onClick={()=>{ setShowPwdModal(true); setDownloadPwd(''); setPwdError(null) }} className="px-4 py-2 bg-white border rounded text-slate-800">Download Excel</button>
+                </div>
+                {showPwdModal && (
+                  <div className="fixed inset-0 z-50 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-black opacity-40" onClick={()=>setShowPwdModal(false)} />
+                    <div className="relative bg-white rounded p-6 w-[90%] max-w-md shadow-lg">
+                      <h3 className="font-semibold text-lg mb-3">Only Authorised persons can download</h3>
+                      <p className="text-sm text-slate-600 mb-3">Enter password to download participants.xlsx</p>
+                      <input type="password" autoFocus value={downloadPwd} onChange={e=>setDownloadPwd(e.target.value)} className="w-full p-2 border rounded mb-2" placeholder="Password" />
+                      {pwdError && <div className="text-red-600 mb-2">{pwdError}</div>}
+                      <div className="flex justify-end space-x-2">
+                        <button type="button" onClick={()=>{ setShowPwdModal(false); setDownloadPwd(''); setPwdError(null) }} className="px-3 py-2 border rounded">Cancel</button>
+                        <button type="button" disabled={downloading} onClick={async ()=>{
+                          try{
+                            setPwdError(null)
+                            setDownloading(true)
+                            const { configuredBase, apiBase } = resolveApiBase()
+                            console.debug('Download requested; configured apiBase=', configuredBase, '=> using', apiBase)
+                            const resp = await fetch(`${apiBase}/participants/download`, {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({ password: downloadPwd })
+                            })
+                            if(resp.status===401){
+                              setPwdError('your not authorised person to download')
+                              setDownloading(false)
+                              return
+                            }
+                            if(resp.status===404){
+                              // server has no file; fallback to local storage CSV
+                              const ok = downloadLocalAsCSV()
+                              if(!ok) alert('No participants file found yet.')
+                              setDownloading(false)
+                              setShowPwdModal(false)
+                              return
+                            }
+                            if(!resp.ok){
+                              alert('Download failed')
+                              setDownloading(false)
+                              return
+                            }
+                            const blob = await resp.blob()
+                            const url = window.URL.createObjectURL(blob)
+                            const a = document.createElement('a')
+                            a.href = url
+                            a.download = 'participants.xlsx'
+                            document.body.appendChild(a)
+                            a.click()
+                            a.remove()
+                            window.URL.revokeObjectURL(url)
+                            setDownloading(false)
+                            setShowPwdModal(false)
+                            setDownloadPwd('')
+                            setPwdError(null)
+                          }catch(e){
+                            console.error('download error', e)
+                            alert('Download failed')
+                            setDownloading(false)
+                          }
+                        }} className="px-3 py-2 bg-saffron text-white rounded" >{downloading? 'Downloading...':'Download'}</button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {errorMessage && <div className="mt-2 text-red-600">{errorMessage}</div>}
+                {success===true && <div className="mt-2 text-green-700">Thank you — your participation has been recorded.</div>}
               </div>
             </form>
           </div>

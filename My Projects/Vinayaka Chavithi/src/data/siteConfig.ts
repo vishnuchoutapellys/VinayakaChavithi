@@ -84,7 +84,9 @@ export const eventDetails = {
 export const apiConfig = {
   // Allow overriding at build time with Vite env var VITE_API_BASE.
   // In production we default to `/api` so the site can call a Vercel Serverless function.
-  apiBase: (import.meta.env && import.meta.env.VITE_API_BASE) || '/api'
+  // During local development, default to the locally-running express server on port 3001
+  // include the '/api' prefix so frontend calls reach the server's routes
+  apiBase: (import.meta.env && import.meta.env.VITE_API_BASE) || (import.meta.env.DEV ? 'http://localhost:3001/api' : '/api')
 }
 
 // For quick real-photo placeholders we provide Unsplash Source queries below.
