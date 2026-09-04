@@ -15,6 +15,8 @@ const sthapanaImg = new URL('../assets/sthapana.jpg', import.meta.url).href
 
 import jaswanthImg from '../assets/committee/jaswanth.jpeg'
 import aravindImg from '../assets/committee/aravind.png'
+import altImg from '../assets/committee/alt.jpg'
+
 
 
 export const siteConfig = {
@@ -114,9 +116,9 @@ export const siteAssets = {
     { name: 'Thirupathi YSR', role: '', phone: '+918499984555', img: tirupathiImg },
     { name: 'Jaswanth ', role: '', phone: '+919866099677', img: jaswanthImg },
     { name: 'Aravind ', role: '', phone: '+916281116559', img: aravindImg },
-    { name: 'Murali Garu', role: 'EC Member, LGP Owners Welfare Association', phone: '+919949292259', img: tirupathiImg },
-    { name: 'Srinivas Reddy ', role: 'EC Member, LGP Owners Welfare Association', phone: '+919245884217', img: tirupathiImg },
-    { name: 'Prasanth', role: 'EC Member, LGP Owners Welfare Association', phone: '+919000311123', img: tirupathiImg },
+    { name: 'Murali Garu', role: 'EC Member, LGP Owners Welfare Association', phone: '+919949292259', img: altImg },
+    { name: 'Srinivas Reddy ', role: 'EC Member, LGP Owners Welfare Association', phone: '+919245884217', img: altImg },
+    { name: 'Prasanth', role: 'EC Member, LGP Owners Welfare Association', phone: '+919000311123', img: altImg },
 
   ],
   // Gallery files: prefer local images in `src/assets/` named ganesha1.jpg..ganesha8.jpg
