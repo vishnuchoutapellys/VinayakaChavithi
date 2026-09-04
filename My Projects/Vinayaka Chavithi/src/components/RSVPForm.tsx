@@ -115,7 +115,7 @@ export default function RSVPForm(){
         const appended = appendToLocal({ dateTime: now, name: payload.name, apartment: payload.apartment, phone: payload.phone, email: payload.email, count: payload.count, interest: payload.interest, message: payload.message })
         if(appended){
           setSuccess(true)
-          setErrorMessage('Saved locally (offline fallback).')
+          // setErrorMessage('Saved locally (offline fallback).')
           setForm({name:'',apartment:'',phone:'',email:'',count:1,interest:'General Participation',message:''})
           setOpen(false)
         } else {
@@ -132,7 +132,7 @@ export default function RSVPForm(){
       const appended = appendToLocal({ dateTime: now, name: payload.name, apartment: payload.apartment, phone: payload.phone, email: payload.email, count: payload.count, interest: payload.interest, message: payload.message })
       if(appended){
         setSuccess(true)
-        setErrorMessage('Saved locally (offline fallback).')
+        // setErrorMessage('Saved locally (offline fallback).')
         setForm({name:'',apartment:'',phone:'',email:'',count:1,interest:'General Participation',message:''})
         setOpen(false)
       } else {
