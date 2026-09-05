@@ -194,11 +194,9 @@ export default function RSVPForm(){
               </select>
               <textarea aria-label="Message" placeholder="Message" value={form.message} onChange={e=>setForm({...form,message:e.target.value})} className="p-2 md:col-span-2 border rounded" />
               <div className="md:col-span-2">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
-                  <button type="submit" className="px-4 py-2 bg-saffron text-white rounded" disabled={loading}>{loading? 'Sending...':'Submit'}</button>
-                </div>
-                <div className="mt-3">
-                  <button type="button" onClick={()=>{ setShowPwdModal(true); setDownloadPwd(''); setPwdError(null) }} className="px-4 py-2 bg-white border rounded text-slate-800">Download Excel</button>
+                <div className="flex flex-row flex-wrap items-center gap-3">
+                  <button type="submit" className="px-4 py-2 bg-saffron text-white rounded shadow" disabled={loading}>{loading? 'Sending...':'Submit'}</button>
+                  <button type="button" onClick={()=>{ setShowPwdModal(true); setDownloadPwd(''); setPwdError(null) }} className="px-4 py-2 bg-white border border-saffron text-saffron rounded shadow hover:bg-saffron hover:text-white transition">Download Excel</button>
                 </div>
                 {showPwdModal && (
                   <div className="fixed inset-0 z-50 flex items-center justify-center">
