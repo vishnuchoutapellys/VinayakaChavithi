@@ -22,6 +22,14 @@ function ensureAssetsDir(){
   if(!fs.existsSync(ASSETS_DIR)) fs.mkdirSync(ASSETS_DIR, { recursive: true })
 }
 
+function formatDate(d){
+  const dt = d instanceof Date ? d : new Date(d)
+  const dd = String(dt.getDate()).padStart(2,'0')
+  const mm = String(dt.getMonth()+1).padStart(2,'0')
+  const yyyy = String(dt.getFullYear())
+  return `${dd}/${mm}/${yyyy}`
+}
+
 app.post('/api/participants', async (req, res) => {
   try{
     const { name, apartment, phone, email, count, interest, message } = req.body || {}
@@ -36,16 +44,17 @@ app.post('/api/participants', async (req, res) => {
       worksheet = workbook.getWorksheet(SHEET_NAME)
       if(!worksheet){
         worksheet = workbook.addWorksheet(SHEET_NAME)
-        worksheet.addRow(['Date & Time','Name','Apartment / House No','Phone','Email','Number of Participants','Participation Type','Message'])
+        worksheet.addRow(['Date & Time','Name','Apartment / House No','Phone','Email','Number of Participants','Participation Type','Slot','Message'])
       }
     } else {
       worksheet = workbook.addWorksheet(SHEET_NAME)
-      worksheet.addRow(['Date & Time','Name','Apartment / House No','Phone','Email','Number of Participants','Participation Type','Message'])
+      worksheet.addRow(['Date & Time','Name','Apartment / House No','Phone','Email','Number of Participants','Participation Type','Slot','Message'])
     }
 
     const now = new Date()
-    const dateTime = now.toISOString()
-    worksheet.addRow([dateTime, String(name).trim(), apartment ? String(apartment).trim() : '', String(phone).trim(), email ? String(email).trim() : '', Number(count) || 1, String(interest).trim(), message ? String(message).trim() : ''])
+    const dateTime = formatDate(now)
+    const slotVal = req.body && req.body.slot ? String(req.body.slot).trim() : ''
+    worksheet.addRow([dateTime, String(name).trim(), apartment ? String(apartment).trim() : '', String(phone).trim(), email ? String(email).trim() : '', Number(count) || 1, String(interest).trim(), slotVal, message ? String(message).trim() : ''])
 
     await workbook.xlsx.writeFile(FILE_PATH)
 

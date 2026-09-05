@@ -27,10 +27,10 @@ export const siteConfig = {
   eventDateISO: '2026-09-14T18:00:00',
   // Full celebration range
   eventRange: {
-    start: '2026-09-14',
-    end: '2026-09-20'
+    start: '14/09/2026',
+    end: '20/09/2026'
   },
-  sthapanaDate: '2026-09-14',
+  sthapanaDate: '14/09/2026',
   venue: {
     name: 'Lahari Green Park',
     address: 'Vinayaka Mandapam, Association Office, LGP, Bowrampet, 500043, Telangana',

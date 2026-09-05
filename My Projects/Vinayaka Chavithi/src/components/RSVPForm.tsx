@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { siteConfig } from '../data/siteConfig'
+import { formatDate } from '../utils/formatDate'
 
 export default function RSVPForm(){
   const [open, setOpen] = useState(false)
   const [loading,setLoading]=useState(false)
   const [success,setSuccess]=useState<null|boolean>(null)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  const [form,setForm]=useState({name:'',apartment:'',phone:'',email:'',count:1,interest:'General Participation',message:''})
+  const [form,setForm]=useState({name:'',apartment:'',phone:'',email:'',count:1,interest:'General Participation',slot:'',message:''})
   const nameRef = useRef<HTMLInputElement | null>(null)
   const [showPwdModal, setShowPwdModal] = useState(false)
   const [downloadPwd, setDownloadPwd] = useState('')
@@ -30,7 +31,7 @@ export default function RSVPForm(){
 
   // Local storage helpers (fallback for serverless/simple deployment)
   const LS_KEY = 'participants_local'
-  const appendToLocal = (row:{dateTime:string,name:string,apartment:string,phone:string,email:string,count:number,interest:string,message:string})=>{
+  const appendToLocal = (row:{dateTime:string,name:string,apartment:string,phone:string,email:string,count:number,interest:string,slot?:string,message:string})=>{
     try{
       const raw = localStorage.getItem(LS_KEY)
       const arr = raw ? JSON.parse(raw) : []
@@ -45,11 +46,11 @@ export default function RSVPForm(){
   const downloadLocalAsCSV = ()=>{
     const rows = readLocal()
     if(!rows || rows.length===0) return false
-    const headers = ['Date & Time','Name','Apartment / House No','Phone','Email','Number of Participants','Participation Type','Message']
+    const headers = ['Date & Time','Name','Apartment / House No','Phone','Email','Number of Participants','Participation Type','Slot','Message']
     const lines = [headers.join(',')]
     for(const r of rows){
       const esc = (v:any)=>`"${String(v||'').replace(/"/g,'""')}"`
-      lines.push([esc(r.dateTime),esc(r.name),esc(r.apartment),esc(r.phone),esc(r.email),esc(r.count),esc(r.interest),esc(r.message)].join(','))
+      lines.push([esc(r.dateTime),esc(r.name),esc(r.apartment),esc(r.phone),esc(r.email),esc(r.count),esc(r.interest),esc((r as any).slot||''),esc(r.message)].join(','))
     }
     const blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' })
     const url = URL.createObjectURL(blob)
@@ -69,12 +70,14 @@ export default function RSVPForm(){
     setErrorMessage(null)
     const name = String(form.name || '').trim()
     const phone = String(form.phone || '').trim()
-    const interest = String(form.interest || '').trim()
-    if(!name || !phone || !interest){
+      const interest = String(form.interest || '').trim()
+      const slotVal = String(form.slot || '').trim()
+      if(!name || !phone || !interest || (interest === 'Pooja' && !slotVal)){
       const missing = [] as string[]
       if(!name) missing.push('Name')
       if(!phone) missing.push('Phone')
       if(!interest) missing.push('Participation Type')
+        if(interest === 'Pooja' && !slotVal) missing.push('Slot')
       setErrorMessage(`Please complete required fields: ${missing.join(', ')}`)
       setSuccess(false)
       return
@@ -88,6 +91,7 @@ export default function RSVPForm(){
         email: String(form.email || '').trim(),
         count: Number(form.count) || 1,
         interest: String(form.interest).trim(),
+        slot: String(form.slot || '').trim(),
         message: String(form.message || '').trim()
       }
 
@@ -105,18 +109,18 @@ export default function RSVPForm(){
         setSuccess(true)
         setErrorMessage(null)
         // clear form only after confirmed saved
-        setForm({name:'',apartment:'',phone:'',email:'',count:1,interest:'General Participation',message:''})
+        setForm({name:'',apartment:'',phone:'',email:'',count:1,interest:'General Participation',slot:'',message:''})
         setOpen(false)
       } else {
         // Server returned error; try fallback to localStorage
         const serverMsg = (data && (data as any).error) ? (data as any).error : `Server returned ${resp.status}`
         console.debug('Server error, falling back to localStorage', serverMsg)
-        const now = (new Date()).toISOString()
-        const appended = appendToLocal({ dateTime: now, name: payload.name, apartment: payload.apartment, phone: payload.phone, email: payload.email, count: payload.count, interest: payload.interest, message: payload.message })
+        const now = formatDate()
+        const appended = appendToLocal({ dateTime: now, name: payload.name, apartment: payload.apartment, phone: payload.phone, email: payload.email, count: payload.count, interest: payload.interest, slot: payload.slot, message: payload.message })
         if(appended){
           setSuccess(true)
           // setErrorMessage('Saved locally (offline fallback).')
-          setForm({name:'',apartment:'',phone:'',email:'',count:1,interest:'General Participation',message:''})
+          setForm({name:'',apartment:'',phone:'',email:'',count:1,interest:'General Participation',slot:'',message:''})
           setOpen(false)
         } else {
           setErrorMessage(String(serverMsg))
@@ -128,12 +132,12 @@ export default function RSVPForm(){
       // network error or server unreachable
       // fallback to localStorage if network error
       console.debug('Network error, saving locally')
-      const now = (new Date()).toISOString()
-      const appended = appendToLocal({ dateTime: now, name: payload.name, apartment: payload.apartment, phone: payload.phone, email: payload.email, count: payload.count, interest: payload.interest, message: payload.message })
+      const now = formatDate()
+      const appended = appendToLocal({ dateTime: now, name: payload.name, apartment: payload.apartment, phone: payload.phone, email: payload.email, count: payload.count, interest: payload.interest, slot: payload.slot, message: payload.message })
       if(appended){
         setSuccess(true)
         // setErrorMessage('Saved locally (offline fallback).')
-        setForm({name:'',apartment:'',phone:'',email:'',count:1,interest:'General Participation',message:''})
+        setForm({name:'',apartment:'',phone:'',email:'',count:1,interest:'General Participation',slot:'',message:''})
         setOpen(false)
       } else {
         setErrorMessage('Unable to reach the server and local save failed.')
@@ -183,7 +187,7 @@ export default function RSVPForm(){
               <input aria-label="Phone" placeholder="Phone*" value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})} className="p-2 border rounded" />
               <input aria-label="Email" placeholder="Email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} className="p-2 border rounded" />
               <input aria-label="Participants" type="number" min={1} placeholder="No. of Participants" value={form.count} onChange={e=>setForm({...form,count:Math.max(1,Number(e.target.value))})} className="p-2 border rounded" />
-              <select aria-label="Interested In" value={form.interest} onChange={e=>setForm({...form,interest:e.target.value})} className="p-2 border rounded">
+              <select aria-label="Interested In" value={form.interest} onChange={e=>setForm(prev=>({...prev,interest:e.target.value, slot: e.target.value === 'Pooja' ? prev.slot : ''}))} className="p-2 border rounded">
                 <option>General Participation</option>
                 <option>Volunteer</option>
                 <option>Sponsorship</option>
@@ -192,6 +196,13 @@ export default function RSVPForm(){
                  <option>Pooja</option>
                 <option>Any Other(Dance,Singing,etc.)</option>
               </select>
+              {form.interest === 'Pooja' && (
+                <select aria-label="Pooja Slot" value={form.slot} onChange={e=>setForm({...form,slot:e.target.value})} className="p-2 border rounded">
+                  <option value="">Select Slot</option>
+                  <option>Morning Slot</option>
+                  <option>Evening Slot</option>
+                </select>
+              )}
               <textarea aria-label="Message" placeholder="Message" value={form.message} onChange={e=>setForm({...form,message:e.target.value})} className="p-2 md:col-span-2 border rounded" />
               <div className="md:col-span-2">
                 <div className="flex flex-row flex-wrap items-center gap-3">

@@ -28,13 +28,13 @@ export default function App(){
           <About />
           <Highlights />
           <Schedule />
+          <Participation />
+          <RSVPForm />
+          <Donation />
           <Programs />
           <Committee />
           <Gallery />
-          <Participation />
-          <Donation />
           <Venue />
-          <RSVPForm />
           <Contact />
         </section>
       </main>
