@@ -13,6 +13,7 @@ export default function RSVPForm(){
   const [downloadPwd, setDownloadPwd] = useState('')
   const [pwdError, setPwdError] = useState<string | null>(null)
   const [downloading, setDownloading] = useState(false)
+  const LOCAL_DOWNLOAD_PASSWORD = 'LGP@2026'
 
   // Resolve API base robustly for both submit and download handlers
   const resolveApiBase = ()=>{
@@ -223,27 +224,22 @@ export default function RSVPForm(){
                           try{
                             setPwdError(null)
                             setDownloading(true)
-                            const { configuredBase, apiBase } = resolveApiBase()
-                            console.debug('Download requested; configured apiBase=', configuredBase, '=> using', apiBase)
-                            const resp = await fetch(`${apiBase}/participants/download`, {
-                              method: 'POST',
-                              headers: { 'Content-Type': 'application/json' },
-                              body: JSON.stringify({ password: downloadPwd })
-                            })
-                            if(resp.status===401){
-                              // try to read error message
-                              let msg = 'Incorrect password. You are not authorized to download.'
-                              try{ const j = await resp.json(); if(j && j.error) msg = String(j.error) }catch{}
-                              setPwdError(msg)
+                            // validate locally first
+                            if(downloadPwd !== LOCAL_DOWNLOAD_PASSWORD){
+                              setPwdError('Incorrect password')
                               setDownloading(false)
                               return
                             }
+                            const { configuredBase, apiBase } = resolveApiBase()
+                            console.debug('Local password validated; requesting file from', apiBase)
+                            const resp = await fetch(`${apiBase}/participants/download`)
                             if(resp.status===404){
                               // server has no file; fallback to local storage CSV
                               const ok = downloadLocalAsCSV()
                               if(!ok) alert('No participants file found yet.')
                               setDownloading(false)
                               setShowPwdModal(false)
+                              setDownloadPwd('')
                               return
                             }
                             if(!resp.ok){

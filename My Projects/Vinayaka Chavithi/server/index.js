@@ -67,7 +67,13 @@ app.post('/api/participants', async (req, res) => {
 
 // Disable unauthenticated GET downloads. Require POST with password for every download attempt.
 app.get('/api/participants/download', (req, res) => {
-  return res.status(401).json({ success: false, error: 'Download requires POST with password.' })
+  try{
+    if(!fs.existsSync(FILE_PATH)) return res.status(404).json({ success: false, error: 'No participants file found' })
+    return res.download(FILE_PATH, 'participants.xlsx')
+  }catch(err){
+    console.error('Download error', err)
+    return res.status(500).json({ success: false, error: 'Internal server error' })
+  }
 })
 
 // POST download with simple password check
