@@ -231,7 +231,10 @@ export default function RSVPForm(){
                               body: JSON.stringify({ password: downloadPwd })
                             })
                             if(resp.status===401){
-                              setPwdError('your not authorised person to download')
+                              // try to read error message
+                              let msg = 'Incorrect password. You are not authorized to download.'
+                              try{ const j = await resp.json(); if(j && j.error) msg = String(j.error) }catch{}
+                              setPwdError(msg)
                               setDownloading(false)
                               return
                             }
@@ -244,7 +247,9 @@ export default function RSVPForm(){
                               return
                             }
                             if(!resp.ok){
-                              alert('Download failed')
+                              let msg = 'Download failed'
+                              try{ const j = await resp.json(); if(j && j.error) msg = String(j.error) }catch{}
+                              alert(msg)
                               setDownloading(false)
                               return
                             }
