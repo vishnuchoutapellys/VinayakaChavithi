@@ -4,7 +4,7 @@ const programs=[
   {title:'Classical Dance',desc:'Bharatanatyam and other forms'},
   {title:'Folk Dance',desc:'Traditional folk performances'},
   {title:'Music',desc:'Carnatic & devotional music'},
-  {title:'Bhajans',desc:'Community bhajans and bhajans sessions'},
+  {title:'Bhajans',desc:'“Bhajanas at Lord Ganesh Mandap”.'},
   {title:'Kids Performances',desc:'Children shows and competitions'},
   {title:'Hanuman Chalisa',desc:'Devotional prayer and recitation'}
 

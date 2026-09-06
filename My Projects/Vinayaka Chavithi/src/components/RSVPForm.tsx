@@ -30,6 +30,10 @@ export default function RSVPForm(){
     return { configuredBase, apiBase }
   }
 
+  // Simple input helpers/validators
+  const sanitizeAlphaSpace = (s:string)=> String(s||'').replace(/[^A-Za-z\s]/g,'')
+  const onlyDigits = (s:string)=> String(s||'').replace(/\D/g,'')
+
   // Local storage helpers (fallback for serverless/simple deployment)
   const LS_KEY = 'participants_local'
   const appendToLocal = (row:{dateTime:string,name:string,apartment:string,phone:string,email:string,count:number,interest:string,slot?:string,message:string})=>{
@@ -71,15 +75,19 @@ export default function RSVPForm(){
     setErrorMessage(null)
     const name = String(form.name || '').trim()
     const phone = String(form.phone || '').trim()
-      const interest = String(form.interest || '').trim()
-      const slotVal = String(form.slot || '').trim()
-      if(!name || !phone || !interest || (interest === 'Pooja' && !slotVal)){
-      const missing = [] as string[]
-      if(!name) missing.push('Name')
-      if(!phone) missing.push('Phone')
-      if(!interest) missing.push('Participation Type')
-        if(interest === 'Pooja' && !slotVal) missing.push('Slot')
-      setErrorMessage(`Please complete required fields: ${missing.join(', ')}`)
+    const interest = String(form.interest || '').trim()
+    const slotVal = String(form.slot || '').trim()
+    const missing = [] as string[]
+    if(!name) missing.push('Name')
+    else if(!/^[A-Za-z\s]+$/.test(name)) missing.push('Name (letters only)')
+    const digits = phone.replace(/\D/g,'')
+    if(!phone) missing.push('Phone')
+    else if(!/^\d{10}$/.test(digits)) missing.push('Phone (10 digits)')
+    if(!interest) missing.push('Participation Type')
+    if(interest === 'Pooja' && !slotVal) missing.push('Slot')
+    if(String(form.message || '').length > 120) missing.push('Message (max 120 chars)')
+    if(missing.length){
+      setErrorMessage(`Please correct: ${missing.join(', ')}`)
       setSuccess(false)
       return
     }
@@ -183,9 +191,9 @@ export default function RSVPForm(){
         <div id="rsvp-panel" className={`mt-3 overflow-hidden transition-all duration-300 ${open? 'max-h-[2000px] opacity-100':'max-h-0 opacity-0'}`} style={{transitionProperty:'max-height, opacity'}}>
           <div className="bg-white p-4 rounded-md shadow-inner border">
             <form onSubmit={submit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input ref={nameRef} aria-label="Name" placeholder="Name*" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} className="p-2 border rounded" />
+              <input ref={nameRef} aria-label="Name" placeholder="Name*" value={form.name} onChange={e=>setForm({...form,name: sanitizeAlphaSpace(e.target.value)})} className="p-2 border rounded" />
               <input aria-label="Apartment" placeholder="Apartment / House No" value={form.apartment} onChange={e=>setForm({...form,apartment:e.target.value})} className="p-2 border rounded" />
-              <input aria-label="Phone" placeholder="Phone*" value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})} className="p-2 border rounded" />
+              <input aria-label="Phone" placeholder="Phone*" type="tel" inputMode="numeric" pattern="\d{10}" maxLength={10} value={form.phone} onChange={e=>setForm({...form,phone: onlyDigits(e.target.value).slice(0,10)})} className="p-2 border rounded" />
               <input aria-label="Email" placeholder="Email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} className="p-2 border rounded" />
               <input aria-label="Participants" type="number" min={1} placeholder="No. of Participants" value={form.count} onChange={e=>setForm({...form,count:Math.max(1,Number(e.target.value))})} className="p-2 border rounded" />
               <select aria-label="Interested In" value={form.interest} onChange={e=>setForm(prev=>({...prev,interest:e.target.value, slot: e.target.value === 'Pooja' ? prev.slot : ''}))} className="p-2 border rounded">
@@ -204,7 +212,8 @@ export default function RSVPForm(){
                   <option>Evening Slot</option>
                 </select>
               )}
-              <textarea aria-label="Message" placeholder="Message" value={form.message} onChange={e=>setForm({...form,message:e.target.value})} className="p-2 md:col-span-2 border rounded" />
+              <textarea aria-label="Message" placeholder="Message" value={form.message} onChange={e=>setForm({...form,message: e.target.value.slice(0,120)})} className="p-2 md:col-span-2 border rounded" maxLength={120} />
+              <div className="text-sm text-slate-500 md:col-span-2">{String(form.message || '').length}/120</div>
               <div className="md:col-span-2">
                 <div className="flex flex-row flex-wrap items-center gap-3">
                   <button type="submit" className="px-4 py-2 bg-saffron text-white rounded shadow" disabled={loading}>{loading? 'Sending...':'Submit'}</button>
