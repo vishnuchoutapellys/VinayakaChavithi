@@ -14,7 +14,7 @@ export default function Venue(){
           onClick={()=>setOpen(v=>!v)}
         >
           <div className="text-left">
-            <div className="font-semibold">Venu Address</div>
+            <div className="font-semibold">Venue Address</div>
             <div className="text-sm text-amber-100">Click to view venue address</div>
           </div>
           <svg className={`w-5 h-5 text-white transition-transform ${open? 'rotate-180':'rotate-0'}`} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
