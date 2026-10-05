@@ -1,0 +1,6 @@
+{
+  "framework": "vite",
+  "installCommand": "npm --prefix \"My Projects/Vinayaka Chavithi\" install",
+  "buildCommand": "npm --prefix \"My Projects/Vinayaka Chavithi\" run build",
+  "outputDirectory": "My Projects/Vinayaka Chavithi/dist"
+}
