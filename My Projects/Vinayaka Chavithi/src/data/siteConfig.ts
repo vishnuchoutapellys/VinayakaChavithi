@@ -11,17 +11,17 @@ const ganesh4 = new URL('../assets/ganesh4.jpg', import.meta.url).href
 const ganesh5 = new URL('../assets/ganesh5.jpg', import.meta.url).href
 const ganesh6 = new URL('../assets/ganesh6.jpg', import.meta.url).href
 const ganesh7 = new URL('../assets/ganesh7.jpg', import.meta.url).href
-const sthapanaImg = new URL('../assets/sthapana.jpg', import.meta.url).href
-
+const ganeshImg = new URL('../assets/ganesh8.jpg', import.meta.url).href
 import jaswanthImg from '../assets/committee/jaswanth.jpeg'
 import aravindImg from '../assets/committee/aravind.png'
 import altImg from '../assets/committee/alt.jpg'
+import durgaMathaImg from '../assets/durgaMatha.png'
 
 
 
 export const siteConfig = {
   associationName: 'LGP Owners Cultural Committee',
-  eventName: 'Lahari Green Park Ganesh Chaturthi Celebrations 2026',
+  eventName: 'Durga Matha Navaratri,Dasara & Bathukamma Utsavalu -2026',
   placeName: 'Lahari Green Park, Bowrampet, Telangana',
   // Primary start (Sthapana) date/time for countdown
   eventDateISO: '2026-09-14T18:00:00',
@@ -54,6 +54,20 @@ export const siteConfig = {
     music: localMusic,
     bell: '/assets/audio/temple-bell.mp3'
   }
+}
+
+export const durgaFestivalConfig = {
+  title: 'Devi Sharannavaratri • Bathukamma • Dasara',
+  year: '2026',
+  subtitle: 'LGP Owners Cultural Committee',
+  place: 'Lahari Green Park, Bowrampet, Telangana',
+  dates: '10th - 21st October',
+  venue: 'Vinayaka Mandapam • LGP Welfare Association Office',
+  invitation: 'Let’s celebrate, serve and rejoice together!',
+  posterImage: durgaMathaImg,
+  storageKey: 'lgp_durga_navaratri_revealed_2026',
+  showOnEveryVisit: true,
+  scratchThreshold: 0.4
 }
 
 // Detailed event copy and donation requirements (actual details provided)
@@ -132,6 +146,6 @@ export const siteAssets = {
     { src: ganesh5, alt: 'Gallery 5' },
     { src: ganesh6, alt: 'Gallery 6' },
     { src: ganesh7, alt: 'Gallery 7' },
-    { src: sthapanaImg, alt: 'Gallery 8' }
+    { src: ganeshImg, alt: 'Gallery 8' }
   ]
 }

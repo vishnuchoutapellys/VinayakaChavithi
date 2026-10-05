@@ -71,6 +71,8 @@ html{scroll-behavior:smooth}
 
 /* petal canvas sits behind content but above background */
 .petal-canvas{position:absolute;inset:0;z-index:9;pointer-events:none;mix-blend-mode:screen}
+.petal-gif{position:absolute;inset:0;z-index:9;pointer-events:none;overflow:hidden;mix-blend-mode:screen}
+.petal-gif img{display:block;width:100%;height:100%;object-fit:cover;opacity:.78}
 
 @media (prefers-reduced-motion: reduce){
   .hero-animate{animation:none}

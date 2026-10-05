@@ -22,9 +22,9 @@ export default function Committee(){
     { name: 'Vishnu', role: '', phone: '+91 9014249898', img: vishnuImg },
     { name: 'Ravi', role: '', phone: '+91 7382460633', img: raviImg },
     { name: 'Srinivas', role: '', phone: '+91 9000099243', img: srinivasImg },
-    { name: 'Jagadeesh', role: '', phone: '+91 9247366539', img: jagadeeshImg },
-    { name: 'Pradeep', role: '', phone: '+91 9052949582', img: pradeepImg },
     { name: 'Prashanth', role: '', phone: '+91 9494645460', img: prasantImg },
+    { name: 'Pradeep', role: '', phone: '+91 9052949582', img: pradeepImg },
+    { name: 'Jagadeesh', role: '', phone: '+91 9247366539', img: jagadeeshImg },
     { name: 'RK Reddy', role: '', phone: '+91 9347392340', img: rkReddy }
 
   ]

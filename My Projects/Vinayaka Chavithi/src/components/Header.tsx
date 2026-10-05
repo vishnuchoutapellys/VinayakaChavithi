@@ -41,7 +41,7 @@ export default function Header(){
     <header className={`fixed z-30 w-full transition-shadow ${scrolled ? 'backdrop-blur bg-white/60 shadow' : 'bg-transparent'}`}>
       <div className="max-w-6xl mx-auto flex items-center justify-between p-4">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center">
+          <div className="w-16 h-16 md:w-12 md:h-12 rounded-full overflow-hidden flex items-center justify-center">
             <img src={siteAssets.logo} alt={`${siteConfig.associationName} logo`} className="w-full h-full object-cover"/>
           </div>
           <div>

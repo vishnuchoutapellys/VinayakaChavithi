@@ -10,7 +10,7 @@ export default function Gallery(){
       <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-2">
         {images.map((img,idx)=> (
           <button key={img.src} onClick={()=>setOpen(idx)} className="overflow-hidden rounded">
-            <img src={img.src} alt={img.alt} className="w-full h-40 object-cover hover:scale-105 transition"/>
+            <img src={img.src} alt={img.alt} loading="lazy" decoding="async" className="w-full h-40 object-cover hover:scale-105 transition"/>
           </button>
         ))}
       </div>

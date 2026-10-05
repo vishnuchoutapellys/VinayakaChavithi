@@ -35,7 +35,7 @@ export default function Highlights(){
           >
             {i.image && (
               <>
-                <img src={i.image} alt={i.title} className="absolute inset-0 w-full h-full object-cover" />
+                <img src={i.image} alt={i.title} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
                 <div
                   className="absolute inset-0"
                   style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.36), rgba(0,0,0,0.10))' }}
