@@ -15,7 +15,7 @@ const ganeshImg = new URL('../assets/ganesh8.jpg', import.meta.url).href
 import jaswanthImg from '../assets/committee/jaswanth.jpeg'
 import aravindImg from '../assets/committee/aravind.png'
 import altImg from '../assets/committee/alt.jpg'
-import durgaMathaImg from '../assets/durgaMatha.png'
+import durgaMathaImg from '../assets/bathukamma.png'
 
 
 
