@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { durgaFestivalConfig } from '../data/siteConfig'
 import { handleDonationClick } from './Donation'
+import helpHands from '../assets/helpHands.png'
 import './DurgaNavaratriReveal.css'
 
 const readRevealFlag = () => {
@@ -157,7 +158,7 @@ export default function DurgaNavaratriReveal() {
           className="durga-reopen"
           onClick={handleDonationClick}
           aria-label="Donate to support our celebration"
-        >💛 <span>Donate</span>
+        ><img src={helpHands} alt="" aria-hidden="true" /><span>DONATE</span>
         </button>
       )}
 
