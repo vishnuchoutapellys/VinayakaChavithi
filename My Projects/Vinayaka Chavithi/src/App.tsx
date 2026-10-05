@@ -16,6 +16,8 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import DevotionalAudio from './components/DevotionalAudio'
 import DurgaNavaratriReveal from './components/DurgaNavaratriReveal'
+import DurgaHighlights from './components/DurgaHighlights'
+import DurgaDonation from './components/DurgaDonation'
 
 export default function App(){
   return (
@@ -28,11 +30,13 @@ export default function App(){
         <section className="max-w-6xl mx-auto px-4 py-8">
           <Countdown />
           <About />
-          <Schedule />
-          <Highlights />
+          {/* <Schedule /> */}
+          {/* <Highlights /> */}
+          <DurgaHighlights />
           <Participation />
           <RSVPForm />
-          <Donation />
+          {/* <Donation /> */}
+          <DurgaDonation />
           <Programs />
           <Committee />
           <Gallery />
