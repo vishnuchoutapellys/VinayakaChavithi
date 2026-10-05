@@ -19,9 +19,10 @@ export default function Hero(){
 
           <div className="hero-meta text-amber-100">
             <p className="mt-4 text-xl drop-shadow">Celebrating Faith, Unity & Community — {siteConfig.associationName}</p>
-            <p className="mt-2 text-sm">Sthapana: {siteConfig.sthapanaDate} · Celebration: {siteConfig.eventRange.start} – {siteConfig.eventRange.end}</p>
+            {/* <p className="mt-2 text-sm">Sthapana: {siteConfig.sthapanaDate} · Celebration: {siteConfig.eventRange.start} – {siteConfig.eventRange.end}</p> */}
+            <p className="mt-2 text-sm"> Celebrations: 10-10-2026 – 20-10-2026</p>
             <div className="mt-6 flex gap-3">
-              <a href="#details" className="px-6 py-3 devotional-accent rounded shadow-lg">View Celebration Details</a>
+              <a href="#schedule" className="px-6 py-3 devotional-accent rounded shadow-lg">View Celebration Details</a>
               <a href="#rsvp" className="px-5 py-3 border border-amber-300 text-amber-100 rounded">Join Us</a>
             </div>
             <div className="mt-6 text-sm">{siteConfig.venue.address}</div>

@@ -5,5 +5,9 @@ export default defineConfig({
   // Use relative base so the site works when deployed to a subpath (GitHub Pages)
   base: './',
   plugins: [react()],
-  server: { port: 5173 }
+  server: {
+    port: 5173,
+    // Windows can reject native watchers for newly added/locked image files.
+    watch: { usePolling: true, interval: 1000 }
+  }
 })

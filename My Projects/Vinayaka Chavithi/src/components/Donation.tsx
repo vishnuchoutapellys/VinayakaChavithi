@@ -74,10 +74,9 @@ export default function Donation(){
   )
 }
 
-function DonateButton(){
+export function handleDonationClick(){
   const upiId = siteConfig.donation.upiId
-  const handleDonateClick = () => {
-    const pa = upiId
+  const pa = upiId
     const pn = siteConfig.associationName
     const tn = `Donation for ${siteConfig.eventName}`
     const upiParams = `pa=${encodeURIComponent(pa || '')}&pn=${encodeURIComponent(pn)}&tn=${encodeURIComponent(tn)}&cu=INR`
@@ -88,7 +87,7 @@ function DonateButton(){
     const isChrome = /Chrome/i.test(navigator.userAgent)
     const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent) && !window.MSStream
 
-    if(pa && !pa.includes('[')){
+  if(pa && !pa.includes('[')){
       if(isAndroid && isChrome){
         const intentUrl = `intent://pay?${upiParams}#Intent;package=com.phonepe.app;scheme=upi;end`
 
@@ -111,15 +110,16 @@ function DonateButton(){
           if(siteConfig.donation.qrImage) window.open(siteConfig.donation.qrImage, '_blank')
         }
       }
-    }else{
+  }else{
       // No valid UPI id configured; open QR image for scanning
       if(siteConfig.donation.qrImage) window.open(siteConfig.donation.qrImage, '_blank')
-    }
   }
+}
 
+function DonateButton(){
   return (
     <>
-      <button type="button" onClick={handleDonateClick} className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-maroon text-white font-semibold shadow">
+      <button type="button" onClick={handleDonationClick} className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-maroon text-white font-semibold shadow">
         Donate
       </button>
       <div className="text-xs text-slate-500 mt-2">Opens PhonePe/UPI app on mobile (fallback: opens QR image for scanning)</div>

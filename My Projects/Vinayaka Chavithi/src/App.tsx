@@ -15,10 +15,12 @@ import RSVPForm from './components/RSVPForm'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import DevotionalAudio from './components/DevotionalAudio'
+import DurgaNavaratriReveal from './components/DurgaNavaratriReveal'
 
 export default function App(){
   return (
     <div className="min-h-screen text-slate-900">
+      <DurgaNavaratriReveal />
       <Header />
       <DevotionalAudio />
       <main>
@@ -26,8 +28,8 @@ export default function App(){
         <section className="max-w-6xl mx-auto px-4 py-8">
           <Countdown />
           <About />
-          <Highlights />
           <Schedule />
+          <Highlights />
           <Participation />
           <RSVPForm />
           <Donation />
