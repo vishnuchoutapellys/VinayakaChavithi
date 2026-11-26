@@ -5,7 +5,7 @@ import nageshwar from '../assets/committee/nageshwar.png'
 import vishnuImg from '../assets/committee/vishnu.jpeg'
 import raviImg from '../assets/committee/ravi.jpeg'
 import srinivasImg from '../assets/committee/srinivas.jpeg'
-import jagadeeshImg from '../assets/committee/jagadeesh.png'
+import krishnaImg from '../assets/committee/krishna.jpeg'
 import pradeepImg from '../assets/committee/pradeep.jpeg'
 import prasantImg from '../assets/committee/prasant.png'
 import rkReddy from '../assets/committee/rkReddy.jpeg'
@@ -20,11 +20,11 @@ export default function Committee(){
     { name: 'Srinivas Goud', role: '', phone: '+91 9036397648', img: srinivasGoud },
     { name: 'Nageshwar Rao', role: '', phone: '+91 7842422288', img: nageshwar },
     { name: 'Vishnu', role: '', phone: '+91 9014249898', img: vishnuImg },
+    { name: 'Krishna', role: '', phone: '+91 9014448490', img: krishnaImg },
     { name: 'Ravi', role: '', phone: '+91 7382460633', img: raviImg },
     { name: 'Srinivas', role: '', phone: '+91 9000099243', img: srinivasImg },
     { name: 'Prashanth', role: '', phone: '+91 9494645460', img: prasantImg },
     { name: 'Pradeep', role: '', phone: '+91 9052949582', img: pradeepImg },
-    { name: 'Jagadeesh', role: '', phone: '+91 9247366539', img: jagadeeshImg },
     { name: 'RK Reddy', role: '', phone: '+91 9347392340', img: rkReddy }
 
   ]
